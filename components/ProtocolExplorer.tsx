@@ -15,8 +15,7 @@ const CATEGORY_CARDS = [
         description: 'Challenge conventional wisdom about training, recovery, and physical performance.',
         members: 374,
         icon: Dumbbell,
-        color: 'text-white',
-        bgIcon: 'bg-slate-800'
+        color: 'text-emerald-400',
     },
     {
         id: 'cat-nutrition',
@@ -25,8 +24,7 @@ const CATEGORY_CARDS = [
         description: 'Explore experimental diets and eating patterns beyond the mainstream.',
         members: 519,
         icon: Apple,
-        color: 'text-white',
-        bgIcon: 'bg-slate-800'
+        color: 'text-orange-400',
     },
     {
         id: 'cat-productivity',
@@ -35,8 +33,7 @@ const CATEGORY_CARDS = [
         description: 'Find focus and effectiveness with anti-hustle systems and methods.',
         members: 241,
         icon: Briefcase,
-        color: 'text-white',
-        bgIcon: 'bg-slate-800'
+        color: 'text-blue-400',
     },
     {
         id: 'cat-biohacking',
@@ -45,8 +42,7 @@ const CATEGORY_CARDS = [
         description: 'Data-driven interventions to optimize your biology for longevity.',
         members: 892,
         icon: Cpu,
-        color: 'text-white',
-        bgIcon: 'bg-slate-800'
+        color: 'text-purple-400',
     },
     {
         id: 'cat-wellness',
@@ -55,8 +51,7 @@ const CATEGORY_CARDS = [
         description: 'Holistic approaches to mental and physical well-being.',
         members: 420,
         icon: Leaf,
-        color: 'text-white',
-        bgIcon: 'bg-slate-800'
+        color: 'text-teal-400',
     },
     {
         id: 'cat-philosophy',
@@ -65,8 +60,7 @@ const CATEGORY_CARDS = [
         description: 'Ancient wisdom applied to modern problem solving.',
         members: 156,
         icon: Brain,
-        color: 'text-white',
-        bgIcon: 'bg-slate-800'
+        color: 'text-yellow-400',
     }
 ];
 
@@ -79,66 +73,69 @@ export const ProtocolExplorer: React.FC<ProtocolExplorerProps> = ({ onSelectProt
 
   if (selectedCategory) {
       return (
-        <div className="p-6 md:p-10 animate-fade-in">
+        <div className="p-6 md:p-12 animate-fade-in max-w-7xl mx-auto">
             <button 
                 onClick={() => setSelectedCategory(null)}
-                className="mb-8 flex items-center gap-2 text-slate-400 hover:text-white transition-colors"
+                className="mb-10 group flex items-center gap-3 text-slate-400 hover:text-white transition-colors"
             >
-                <ArrowLeft className="w-4 h-4" /> Back to Hub
+                <div className="p-2 rounded-full bg-white/5 group-hover:bg-white/10 transition-colors">
+                    <ArrowLeft className="w-4 h-4" /> 
+                </div>
+                <span className="font-medium text-sm tracking-wide">Back to Hub</span>
             </button>
             
-            <div className="mb-8">
-                <h2 className="text-4xl font-bold text-white mb-2">{selectedCategory} Protocols</h2>
-                <p className="text-slate-400">Community verified experiments for this domain.</p>
+            <div className="mb-12 border-b border-white/5 pb-8">
+                <h2 className="text-5xl font-light text-white mb-4 tracking-tight">{selectedCategory} Protocols</h2>
+                <p className="text-slate-400 text-lg font-light">Community verified experiments for this domain.</p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
                 {filteredProtocols.length > 0 ? filteredProtocols.map(protocol => (
                 <div 
                     key={protocol.id}
                     onClick={() => onSelectProtocol(protocol)}
-                    className="group bg-slate-900 border border-slate-800 rounded-xl p-6 hover:border-blue-500/50 transition-all cursor-pointer relative overflow-hidden"
+                    className="group bg-black/20 backdrop-blur-sm border border-white/5 rounded-2xl p-8 hover:border-blue-500/30 hover:bg-white/5 transition-all duration-300 cursor-pointer relative overflow-hidden shadow-lg shadow-black/20"
                 >
-                    <div className="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <Zap className="text-blue-500 w-5 h-5" />
+                    <div className="absolute top-0 right-0 p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform group-hover:translate-x-0 translate-x-4">
+                        <Zap className="text-blue-500 w-5 h-5 drop-shadow-[0_0_8px_rgba(59,130,246,0.8)]" />
                     </div>
 
-                    <div className="flex items-center gap-2 mb-4">
-                        <span className={`text-xs font-mono px-2 py-1 rounded-md uppercase tracking-wider ${
-                            protocol.difficulty === Difficulty.Extreme ? 'bg-red-900/30 text-red-400' :
-                            protocol.difficulty === Difficulty.Hard ? 'bg-orange-900/30 text-orange-400' :
-                            'bg-blue-900/30 text-blue-400'
+                    <div className="flex items-center gap-2 mb-6">
+                        <span className={`text-[10px] font-mono px-2.5 py-1 rounded uppercase tracking-wider font-semibold border ${
+                            protocol.difficulty === Difficulty.Extreme ? 'bg-red-500/10 text-red-400 border-red-500/20' :
+                            protocol.difficulty === Difficulty.Hard ? 'bg-orange-500/10 text-orange-400 border-orange-500/20' :
+                            'bg-blue-500/10 text-blue-400 border-blue-500/20'
                         }`}>
                             {protocol.difficulty}
                         </span>
                     </div>
 
-                    <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-blue-400 transition-colors">
+                    <h3 className="text-2xl font-medium text-white mb-3 group-hover:text-blue-100 transition-colors">
                     {protocol.title}
                     </h3>
-                    <p className="text-slate-400 text-sm line-clamp-2 mb-6 h-10">
+                    <p className="text-slate-400 text-sm leading-relaxed mb-8 h-10 line-clamp-2 font-light">
                     {protocol.description}
                     </p>
 
-                    <div className="flex items-center justify-between text-sm text-slate-500 border-t border-slate-800 pt-4">
-                        <div className="flex items-center gap-1">
-                            <Clock className="w-4 h-4" />
-                            <span>{protocol.durationDays}d</span>
+                    <div className="flex items-center justify-between text-sm text-slate-500 border-t border-white/5 pt-6 mt-auto">
+                        <div className="flex items-center gap-1.5">
+                            <Clock className="w-4 h-4 text-slate-600" />
+                            <span className="font-mono text-xs">{protocol.durationDays}d</span>
                         </div>
-                        <div className="flex items-center gap-1">
-                            <Users className="w-4 h-4" />
-                            <span>{(protocol.participantCount / 1000).toFixed(1)}k</span>
+                        <div className="flex items-center gap-1.5">
+                            <Users className="w-4 h-4 text-slate-600" />
+                            <span className="font-mono text-xs">{(protocol.participantCount / 1000).toFixed(1)}k</span>
                         </div>
-                        <div className="flex items-center gap-1 text-blue-500">
+                        <div className="flex items-center gap-1.5 text-blue-400">
                             <CheckCircle className="w-4 h-4" />
-                            <span>{protocol.successRate}%</span>
+                            <span className="font-mono text-xs font-bold">{protocol.successRate}%</span>
                         </div>
                     </div>
                 </div>
                 )) : (
-                    <div className="col-span-full text-center py-20 border border-dashed border-slate-800 rounded-xl">
-                        <p className="text-slate-500">No protocols found in this category yet.</p>
-                        <button className="mt-4 text-blue-500 hover:underline">Submit an experiment</button>
+                    <div className="col-span-full text-center py-32 border border-dashed border-white/10 rounded-2xl bg-white/5">
+                        <p className="text-slate-500 font-light">No protocols found in this category yet.</p>
+                        <button className="mt-4 text-blue-400 hover:text-blue-300 text-sm font-medium transition-colors">Submit an experiment request</button>
                     </div>
                 )}
             </div>
@@ -147,35 +144,29 @@ export const ProtocolExplorer: React.FC<ProtocolExplorerProps> = ({ onSelectProt
   }
 
   return (
-    <div className="w-full animate-fade-in">
+    <div className="w-full animate-fade-in pb-20">
       {/* Hero Section */}
-      <div className="bg-slate-950 py-20 md:py-28 text-center px-4 relative overflow-hidden">
-        {/* Background glow effect */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-blue-900/10 blur-[100px] rounded-full pointer-events-none"></div>
+      <div className="py-24 md:py-36 text-center px-4 relative overflow-hidden">
+        {/* Background ambient glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-blue-900/10 blur-[120px] rounded-full pointer-events-none mix-blend-screen"></div>
         
-        <div className="relative z-10 max-w-4xl mx-auto space-y-8">
-            <h1 className="text-5xl md:text-7xl font-bold tracking-tighter text-white leading-tight">
-                Your mileage <span className="text-blue-500">will</span> vary.
+        <div className="relative z-10 max-w-5xl mx-auto space-y-8">
+            <h1 className="text-6xl md:text-8xl font-semibold tracking-tighter text-white leading-[0.9]">
+                Your mileage <br/> 
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400 relative">
+                    will vary.
+                    <span className="absolute -bottom-2 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-50"></span>
+                </span>
             </h1>
-            <p className="text-slate-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-                A community for personal experimentation. No gurus. No universal answers. Just honest experiences. Pick a topic to explore protocols.
+            <p className="text-slate-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed font-light tracking-wide">
+                No gurus. No universal answers. Just honest data. <br/>
+                <span className="text-slate-500">Pick a domain to start experimenting.</span>
             </p>
         </div>
       </div>
 
-      {/* Connect Section */}
-      <div className="border-y border-slate-800 bg-slate-900/30 py-16">
-         <div className="max-w-3xl mx-auto text-center px-6 space-y-6">
-             <h2 className="text-2xl md:text-3xl font-bold text-white">Connect with Fellow Experimenters</h2>
-             <p className="text-slate-400">Join virtual and in-person events to share insights, ask questions, and find your tribe.</p>
-             <button className="bg-blue-600 hover:bg-blue-500 text-white px-8 py-3 rounded-lg font-medium transition-all shadow-lg shadow-blue-900/20 hover:scale-105">
-                 Explore Meetups
-             </button>
-         </div>
-      </div>
-
       {/* Categories Grid */}
-      <div className="max-w-7xl mx-auto px-6 py-20">
+      <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
            {CATEGORY_CARDS.map((card) => {
                const Icon = card.icon;
@@ -183,26 +174,43 @@ export const ProtocolExplorer: React.FC<ProtocolExplorerProps> = ({ onSelectProt
                    <div 
                         key={card.id}
                         onClick={() => setSelectedCategory(card.category)}
-                        className="group bg-slate-900 border border-slate-800 p-8 rounded-2xl hover:bg-slate-800 hover:border-slate-700 transition-all cursor-pointer flex flex-col h-full"
+                        className="group bg-white/[0.02] backdrop-blur-sm border border-white/5 p-8 rounded-3xl hover:bg-white/[0.06] hover:border-white/10 transition-all duration-300 cursor-pointer flex flex-col h-full hover:-translate-y-1 shadow-2xl shadow-black/20"
                    >
-                        <div className="mb-6">
-                            <Icon className={`w-10 h-10 ${card.color}`} strokeWidth={1.5} />
+                        <div className="mb-8 flex items-center justify-between">
+                            <div className={`p-3 rounded-2xl bg-white/5 border border-white/5 group-hover:scale-110 transition-transform duration-300`}>
+                                <Icon className={`w-6 h-6 ${card.color}`} strokeWidth={1.5} />
+                            </div>
+                            <div className="opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300 text-slate-500">
+                                <ArrowLeft className="w-5 h-5 rotate-180" />
+                            </div>
                         </div>
                         
-                        <h3 className="text-2xl font-bold text-white mb-3">{card.label}</h3>
-                        <p className="text-slate-400 leading-relaxed mb-8 flex-grow">
+                        <h3 className="text-2xl font-medium text-white mb-3 tracking-tight">{card.label}</h3>
+                        <p className="text-slate-400 leading-relaxed mb-8 flex-grow font-light text-sm">
                             {card.description}
                         </p>
 
-                        <div className="mt-auto pt-6 border-t border-slate-800/50 flex items-center justify-between">
-                             <span className="text-sm text-slate-500 font-mono">
-                                {card.members} members experimenting
+                        <div className="mt-auto pt-6 border-t border-white/5 flex items-center justify-between">
+                             <span className="text-[11px] uppercase tracking-widest text-slate-500 font-semibold">
+                                {card.members} active members
                              </span>
                         </div>
                    </div>
                );
            })}
         </div>
+      </div>
+
+      {/* Footer Connect Banner */}
+      <div className="max-w-4xl mx-auto mt-32 px-6">
+          <div className="border border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent rounded-3xl p-10 md:p-16 text-center relative overflow-hidden">
+                <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
+                <h2 className="text-2xl md:text-3xl font-medium text-white mb-4">Connect with Fellow Experimenters</h2>
+                <p className="text-slate-400 font-light mb-8 max-w-lg mx-auto">Join virtual and in-person events to share insights, ask questions, and find your tribe.</p>
+                <button className="bg-white text-slate-950 hover:bg-slate-200 px-8 py-3.5 rounded-full font-medium transition-all hover:scale-105">
+                    Find a Meetup
+                </button>
+          </div>
       </div>
     </div>
   );

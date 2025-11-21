@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Layout, Compass, Activity, Users, PlusCircle, Menu, X, Sparkles, BrainCircuit, Search } from 'lucide-react';
+import { Layout, Compass, Activity, Users, PlusCircle, Menu, X, Sparkles, BrainCircuit, Search, TrendingUp } from 'lucide-react';
 import { Protocol, Experiment } from './types';
 import { CURRENT_USER, SAMPLE_PROTOCOLS, USER_EXPERIMENTS } from './constants';
 import { ProtocolExplorer } from './components/ProtocolExplorer';
@@ -29,8 +29,6 @@ export default function App() {
     setIsGenerating(false);
 
     if (newProtocol) {
-      // In a real app, we'd probably show a preview first. 
-      // Here we auto-add it to a list or show an alert.
       alert(`Generated Protocol: ${newProtocol.title}\n\n${newProtocol.description}`);
       setIsAIGeneratorOpen(false);
       setAiGoal('');
@@ -40,80 +38,93 @@ export default function App() {
     }
   };
 
+  const BrandLogo = () => (
+    <div className="flex items-center gap-3 select-none group cursor-pointer">
+        <div className="relative">
+            <div className="absolute -inset-0.5 bg-gradient-to-tr from-blue-600 to-indigo-600 rounded-xl blur opacity-30 group-hover:opacity-60 transition duration-500"></div>
+            <div className="relative w-10 h-10 bg-slate-950 rounded-xl border border-white/10 flex items-center justify-center shadow-xl">
+                <TrendingUp className="w-5 h-5 text-blue-400" strokeWidth={2.5} />
+            </div>
+        </div>
+        <div className="flex flex-col justify-center">
+            <span className="font-bold text-white tracking-tight text-base leading-none">CONTRARIAN</span>
+            <span className="text-[10px] font-medium text-slate-500 tracking-[0.3em] leading-none mt-1.5 group-hover:text-blue-400 transition-colors">HUB</span>
+        </div>
+    </div>
+  );
+
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-200 flex font-sans selection:bg-emerald-500/30">
+    <div className="min-h-screen bg-transparent text-slate-200 flex font-sans">
       
       {/* Desktop Sidebar */}
-      <aside className="hidden md:flex w-64 flex-col border-r border-slate-800 bg-slate-950/50 backdrop-blur-xl fixed h-full z-20">
-        <div className="p-6 border-b border-slate-800">
-            <h1 className="text-xl font-extrabold tracking-tighter text-white flex items-center gap-2 uppercase">
-                <div className="w-2 h-8 bg-blue-600 rounded-sm"></div>
-                CONTRARIAN HUB
-            </h1>
+      <aside className="hidden md:flex w-72 flex-col border-r border-white/5 bg-black/20 backdrop-blur-xl fixed h-full z-20">
+        <div className="p-8 border-b border-white/5 flex items-center">
+            <BrandLogo />
         </div>
         
-        <nav className="flex-1 p-4 space-y-2">
+        <nav className="flex-1 px-4 py-8 space-y-2">
             <button 
                 onClick={() => setCurrentView('explore')}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${currentView === 'explore' ? 'bg-slate-800 text-white border border-slate-700' : 'text-slate-400 hover:bg-slate-900 hover:text-white'}`}
+                className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl transition-all duration-300 group ${currentView === 'explore' ? 'bg-white/5 text-white shadow-inner border border-white/5' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
             >
-                <Compass className="w-5 h-5" />
-                <span className="font-medium">Explore Protocols</span>
+                <Compass className={`w-5 h-5 ${currentView === 'explore' ? 'text-blue-400' : 'text-slate-500 group-hover:text-blue-400'} transition-colors`} />
+                <span className="font-medium tracking-wide text-sm">Explore Protocols</span>
             </button>
             <button 
                 onClick={() => setCurrentView('dashboard')}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${currentView === 'dashboard' ? 'bg-slate-800 text-white border border-slate-700' : 'text-slate-400 hover:bg-slate-900 hover:text-white'}`}
+                className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl transition-all duration-300 group ${currentView === 'dashboard' ? 'bg-white/5 text-white shadow-inner border border-white/5' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
             >
-                <Activity className="w-5 h-5" />
-                <span className="font-medium">My Experiments</span>
+                <Activity className={`w-5 h-5 ${currentView === 'dashboard' ? 'text-blue-400' : 'text-slate-500 group-hover:text-blue-400'} transition-colors`} />
+                <span className="font-medium tracking-wide text-sm">My Experiments</span>
             </button>
             <button 
                 onClick={() => setCurrentView('community')}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${currentView === 'community' ? 'bg-slate-800 text-white border border-slate-700' : 'text-slate-400 hover:bg-slate-900 hover:text-white'}`}
+                className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl transition-all duration-300 group ${currentView === 'community' ? 'bg-white/5 text-white shadow-inner border border-white/5' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
             >
-                <Users className="w-5 h-5" />
-                <span className="font-medium">Community</span>
+                <Users className={`w-5 h-5 ${currentView === 'community' ? 'text-blue-400' : 'text-slate-500 group-hover:text-blue-400'} transition-colors`} />
+                <span className="font-medium tracking-wide text-sm">Community</span>
             </button>
         </nav>
 
-        <div className="p-4 border-t border-slate-800">
+        <div className="p-4 border-t border-white/5">
             <button 
                 onClick={() => setIsAIGeneratorOpen(true)}
-                className="w-full flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white py-3 rounded-lg border border-slate-700 transition-all"
+                className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white py-3.5 rounded-xl transition-all shadow-lg shadow-blue-900/20 hover:shadow-blue-900/40 group relative overflow-hidden"
             >
-                <Sparkles className="w-4 h-4 text-blue-400" />
-                <span className="font-bold text-sm">AI Protocol Gen</span>
+                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
+                <Sparkles className="w-4 h-4 relative z-10" />
+                <span className="font-semibold text-sm relative z-10">AI Protocol Gen</span>
             </button>
             
-            <div className="mt-4 flex items-center gap-3 px-2">
-                <img src={user.avatar} alt="User" className="w-8 h-8 rounded-full border border-slate-700" />
+            <div className="mt-6 flex items-center gap-3 px-2 pb-2">
+                <div className="relative">
+                    <img src={user.avatar} alt="User" className="w-9 h-9 rounded-full ring-2 ring-white/10" />
+                    <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 border-slate-950"></div>
+                </div>
                 <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-white truncate">{user.name}</p>
-                    <p className="text-xs text-slate-500">Lvl {user.level} Contrarian</p>
+                    <p className="text-[10px] uppercase tracking-wider text-slate-500">Lvl {user.level} Contrarian</p>
                 </div>
             </div>
         </div>
       </aside>
 
       {/* Mobile Header */}
-      <div className="md:hidden fixed top-0 w-full z-30 bg-slate-950/90 backdrop-blur border-b border-slate-800 p-4 flex items-center justify-between">
-         <div className="flex items-center gap-2">
-            <div className="w-1 h-6 bg-blue-600 rounded-sm"></div>
-            <span className="font-bold text-white">CONTRARIAN HUB</span>
-         </div>
-         <button className="text-white">
+      <div className="md:hidden fixed top-0 w-full z-30 bg-slate-950/80 backdrop-blur-lg border-b border-white/5 p-4 flex items-center justify-between">
+         <BrandLogo />
+         <button className="text-white bg-white/5 p-2 rounded-lg">
             <Menu className="w-6 h-6" />
          </button>
       </div>
 
       {/* Main Content Area */}
-      <main className="flex-1 md:ml-64 p-0 md:p-0 mt-14 md:mt-0 w-full">
-        {/* Dynamic Content - adjusted padding internally in components */}
-        <div className="animate-fade-in-up">
+      <main className="flex-1 md:ml-72 p-0 md:p-0 mt-20 md:mt-0 w-full relative">
+        {/* Dynamic Content */}
+        <div className="animate-fade-in-up min-h-screen">
             {currentView === 'explore' && (
                 <ProtocolExplorer onSelectProtocol={(p) => console.log('Selected', p)} />
             )}
-            <div className="p-6 md:p-10">
+            <div className="p-6 md:p-12 max-w-7xl mx-auto">
                 {currentView === 'dashboard' && (
                     <UserDashboard user={user} experiments={myExperiments} />
                 )}
@@ -126,42 +137,42 @@ export default function App() {
 
       {/* AI Modal Overlay */}
       {isAIGeneratorOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center px-4 bg-black/80 backdrop-blur-sm animate-fade-in">
-            <div className="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-lg p-6 shadow-2xl relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center px-4 bg-slate-950/60 backdrop-blur-sm animate-fade-in">
+            <div className="bg-slate-900/90 border border-white/10 rounded-2xl w-full max-w-lg p-8 shadow-2xl shadow-black/50 relative backdrop-blur-xl">
                 <button 
                     onClick={() => setIsAIGeneratorOpen(false)}
-                    className="absolute top-4 right-4 text-slate-500 hover:text-white"
+                    className="absolute top-4 right-4 text-slate-500 hover:text-white transition-colors"
                 >
-                    <X className="w-6 h-6" />
+                    <X className="w-5 h-5" />
                 </button>
 
-                <div className="mb-6">
-                    <div className="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center mb-4">
+                <div className="mb-8 text-center">
+                    <div className="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-5 mx-auto border border-blue-500/20 shadow-[0_0_15px_rgba(59,130,246,0.1)]">
                         <Sparkles className="w-6 h-6 text-blue-400" />
                     </div>
-                    <h2 className="text-2xl font-bold text-white">Generate Protocol</h2>
-                    <p className="text-slate-400 mt-1">Use Gemini AI to design a custom optimization stack.</p>
+                    <h2 className="text-2xl font-bold text-white mb-2">Design Your Protocol</h2>
+                    <p className="text-slate-400 text-sm">Leverage Gemini AI to build a data-driven optimization stack tailored to your physiology.</p>
                 </div>
 
-                <form onSubmit={handleGenerateProtocol} className="space-y-4">
-                    <div>
-                        <label className="block text-sm font-medium text-slate-300 mb-1">What is your primary goal?</label>
+                <form onSubmit={handleGenerateProtocol} className="space-y-5">
+                    <div className="space-y-2">
+                        <label className="text-xs font-semibold text-slate-300 uppercase tracking-wider">Primary Objective</label>
                         <input 
                             type="text" 
                             value={aiGoal}
                             onChange={(e) => setAiGoal(e.target.value)}
-                            placeholder="e.g. Increase deep sleep, Learn Python in 30 days"
-                            className="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-white focus:ring-2 focus:ring-blue-500 outline-none"
+                            placeholder="e.g. Increase deep sleep, Learn Python"
+                            className="w-full bg-black/20 border border-white/10 rounded-xl p-3.5 text-white placeholder:text-slate-600 focus:ring-1 focus:ring-blue-500 focus:border-blue-500/50 outline-none transition-all"
                         />
                     </div>
-                    <div>
-                        <label className="block text-sm font-medium text-slate-300 mb-1">Time commitment (daily)?</label>
+                    <div className="space-y-2">
+                        <label className="text-xs font-semibold text-slate-300 uppercase tracking-wider">Daily Availability</label>
                         <input 
                             type="text" 
                             value={aiTime}
                             onChange={(e) => setAiTime(e.target.value)}
-                            placeholder="e.g. 30 mins morning, 1 hour evening"
-                            className="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-white focus:ring-2 focus:ring-blue-500 outline-none"
+                            placeholder="e.g. 30 mins morning"
+                            className="w-full bg-black/20 border border-white/10 rounded-xl p-3.5 text-white placeholder:text-slate-600 focus:ring-1 focus:ring-blue-500 focus:border-blue-500/50 outline-none transition-all"
                         />
                     </div>
                     
@@ -169,11 +180,11 @@ export default function App() {
                         <button 
                             type="submit" 
                             disabled={isGenerating}
-                            className={`w-full py-3 rounded-lg font-bold text-white transition-all ${isGenerating ? 'bg-slate-700 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-500'}`}
+                            className={`w-full py-4 rounded-xl font-semibold text-sm tracking-wide text-white transition-all ${isGenerating ? 'bg-slate-800 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-500 shadow-lg shadow-blue-900/20 hover:shadow-blue-900/40 hover:-translate-y-0.5'}`}
                         >
                             {isGenerating ? (
                                 <span className="flex items-center justify-center gap-2">
-                                    <Activity className="w-4 h-4 animate-spin" /> Processing...
+                                    <Activity className="w-4 h-4 animate-spin" /> Architecting Protocol...
                                 </span>
                             ) : 'Generate Protocol'}
                         </button>
