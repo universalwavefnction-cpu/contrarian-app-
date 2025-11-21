@@ -1,0 +1,7 @@
+{
+  "name": "Contrarian",
+  "description": "A data-driven community platform for biohackers, founders, and optimizers to discover protocols, track experiments, and connect.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
