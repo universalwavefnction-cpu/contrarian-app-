@@ -1,4 +1,4 @@
-import { Category, Difficulty, Protocol, Experiment, User, CommunityPost } from './types';
+import { Category, Difficulty, Protocol, Experiment, User, CommunityPost, BlogPost } from './types';
 
 export const CURRENT_USER: User = {
   id: 'u1',
@@ -8,6 +8,108 @@ export const CURRENT_USER: User = {
   level: 7,
   location: 'San Francisco, CA'
 };
+
+// ... (rest of the file remains unchanged until the end)
+
+export const COMMUNITY_POSTS: CommunityPost[] = [
+  {
+    id: 'post1',
+    userId: 'u2',
+    userName: 'Sarah Biohacks',
+    userAvatar: 'https://picsum.photos/100/100?random=2',
+    content: 'Just finished day 30 of the Cold Plunge protocol. HRV is up 15% and sleep latency is down to 5 mins. Highly recommend pairing with breathwork.',
+    likes: 45,
+    comments: 12,
+    timestamp: '2h ago',
+    tags: ['#ColdPlunge', '#Biohacking']
+  },
+  {
+    id: 'post2',
+    userId: 'u3',
+    userName: 'DevGrind',
+    userAvatar: 'https://picsum.photos/100/100?random=3',
+    content: 'Failed my Dopamine Fast at hour 18 because I needed to check a deploy. Restarting tomorrow. Accountability partner needed!',
+    likes: 12,
+    comments: 8,
+    timestamp: '5h ago',
+    tags: ['#FailureIsLearning', '#Coding']
+  }
+];
+
+export const BLOG_POSTS: BlogPost[] = [
+  {
+    id: 'b1',
+    title: 'Why Zone 2 Training is the Holy Grail of Longevity',
+    excerpt: 'It’s not about burning calories. It’s about mitochondrial efficiency. Here is the science behind low-intensity cardio.',
+    content: 'Full article content here...',
+    author: 'Dr. Peter Attia',
+    date: 'Oct 12, 2023',
+    readTime: '8 min read',
+    category: Category.Fitness,
+    imageUrl: 'https://picsum.photos/800/400?random=101',
+    tags: ['Longevity', 'Cardio']
+  },
+  {
+    id: 'b2',
+    title: 'The Case Against "Clean Code"',
+    excerpt: 'Over-abstraction is killing your startup. Why you should write "dirty" code until you find product-market fit.',
+    content: 'Full article content here...',
+    author: 'Tech Contrarian',
+    date: 'Nov 01, 2023',
+    readTime: '5 min read',
+    category: Category.Coding,
+    imageUrl: 'https://picsum.photos/800/400?random=102',
+    tags: ['Software Engineering', 'Startups']
+  },
+  {
+    id: 'b3',
+    title: 'Stoicism is Not About Suppressing Emotion',
+    excerpt: 'A common misconception debauched. Real Stoicism is about processing emotion through reason, not ignoring it.',
+    content: 'Full article content here...',
+    author: 'Ryan Holiday',
+    date: 'Sep 28, 2023',
+    readTime: '6 min read',
+    category: Category.Philosophy,
+    imageUrl: 'https://picsum.photos/800/400?random=103',
+    tags: ['Philosophy', 'Mental Health']
+  },
+  {
+    id: 'b4',
+    title: 'Magnesium: The Missing Mineral',
+    excerpt: '80% of the population is deficient. How magnesium impacts sleep, anxiety, and recovery.',
+    content: 'Full article content here...',
+    author: 'Andrew Huberman',
+    date: 'Oct 20, 2023',
+    readTime: '10 min read',
+    category: Category.Biohacking,
+    imageUrl: 'https://picsum.photos/800/400?random=104',
+    tags: ['Supplements', 'Health']
+  },
+  {
+    id: 'b5',
+    title: 'Deep Work in a Distracted World',
+    excerpt: 'The ability to perform deep work is becoming increasingly rare and valuable. Here is how to cultivate it.',
+    content: 'Full article content here...',
+    author: 'Cal Newport',
+    date: 'Nov 05, 2023',
+    readTime: '7 min read',
+    category: Category.Productivity,
+    imageUrl: 'https://picsum.photos/800/400?random=105',
+    tags: ['Focus', 'Career']
+  },
+  {
+    id: 'b6',
+    title: 'Carnivore Diet: 30 Day Results',
+    excerpt: 'I ate nothing but meat for a month. Here is what happened to my bloodwork and energy levels.',
+    content: 'Full article content here...',
+    author: 'Experimenter X',
+    date: 'Oct 15, 2023',
+    readTime: '12 min read',
+    category: Category.Nutrition,
+    imageUrl: 'https://picsum.photos/800/400?random=106',
+    tags: ['Diet', 'Keto']
+  }
+];
 
 export const SAMPLE_PROTOCOLS: Protocol[] = [
   {
@@ -102,9 +204,9 @@ export const USER_EXPERIMENTS: Experiment[] = [
     status: 'Active',
     category: Category.Fitness,
     moodLogs: [
-        { date: '1', score: 60 }, { date: '3', score: 65 }, { date: '5', score: 55 },
-        { date: '7', score: 70 }, { date: '10', score: 80 }, { date: '12', score: 85 },
-        { date: '14', score: 82 }
+      { date: '1', score: 60 }, { date: '3', score: 65 }, { date: '5', score: 55 },
+      { date: '7', score: 70 }, { date: '10', score: 80 }, { date: '12', score: 85 },
+      { date: '14', score: 82 }
     ]
   },
   {
@@ -117,33 +219,8 @@ export const USER_EXPERIMENTS: Experiment[] = [
     status: 'Active',
     category: Category.Productivity,
     moodLogs: [
-        { date: '1', score: 40 }, { date: '2', score: 50 }, { date: '3', score: 45 },
-        { date: '4', score: 60 }, { date: '5', score: 75 }
+      { date: '1', score: 40 }, { date: '2', score: 50 }, { date: '3', score: 45 },
+      { date: '4', score: 60 }, { date: '5', score: 75 }
     ]
-  }
-];
-
-export const COMMUNITY_POSTS: CommunityPost[] = [
-  {
-    id: 'post1',
-    userId: 'u2',
-    userName: 'Sarah Biohacks',
-    userAvatar: 'https://picsum.photos/100/100?random=2',
-    content: 'Just finished day 30 of the Cold Plunge protocol. HRV is up 15% and sleep latency is down to 5 mins. Highly recommend pairing with breathwork.',
-    likes: 45,
-    comments: 12,
-    timestamp: '2h ago',
-    tags: ['#ColdPlunge', '#Biohacking']
-  },
-  {
-    id: 'post2',
-    userId: 'u3',
-    userName: 'DevGrind',
-    userAvatar: 'https://picsum.photos/100/100?random=3',
-    content: 'Failed my Dopamine Fast at hour 18 because I needed to check a deploy. Restarting tomorrow. Accountability partner needed!',
-    likes: 12,
-    comments: 8,
-    timestamp: '5h ago',
-    tags: ['#FailureIsLearning', '#Coding']
   }
 ];
