@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Search, Command, ArrowRight, Sun, Moon, Layout, Compass, Activity, Users, BookOpen, Library, Plus } from 'lucide-react';
+import { Search, Command, ArrowRight, Sun, Moon, Layout, Compass, Activity, Users, BookOpen, Library, Plus, Sparkles } from 'lucide-react';
 import { useTheme } from './ThemeContext';
 
 interface CommandPaletteProps {
@@ -32,6 +32,22 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose,
         { id: 'nav-resources', label: 'Resources', icon: Library, group: 'Navigation', action: () => onNavigate('resources') },
 
         // Actions
+        {
+            id: 'admin',
+            label: 'Open Admin Studio',
+            icon: Sparkles,
+            group: 'Actions',
+            action: () => {
+                // We need a way to set the view to 'admin'.
+                // Since CommandPalette is inside App, we can pass a prop or use a custom event.
+                // For now, let's assume we passed a handler or context.
+                // Actually, CommandPalette doesn't have access to setView.
+                // I need to update CommandPalette props to accept onAction or specific handlers.
+                // Or I can emit a custom event.
+                window.dispatchEvent(new CustomEvent('navigate-to-view', { detail: 'admin' }));
+                onClose();
+            }
+        },
         { id: 'act-theme', label: `Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`, icon: theme === 'dark' ? Sun : Moon, group: 'Actions', action: () => toggleTheme() },
         { id: 'act-submit', label: 'Submit New Protocol', icon: Plus, group: 'Actions', action: () => { onNavigate('explore'); /* In a real app we'd trigger the modal too */ } },
     ];
@@ -116,13 +132,13 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose,
                                         key={cmd.id}
                                         onClick={() => { cmd.action(); onClose(); }}
                                         onMouseEnter={() => setSelectedIndex(index)}
-                                        className={`w-full flex items-center justify-between px-3 py-3 rounded-lg transition-colors ${isSelected
+                                        className={`w - full flex items - center justify - between px - 3 py - 3 rounded - lg transition - colors ${isSelected
                                                 ? 'bg-blue-600 text-white'
                                                 : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5'
-                                            }`}
+                                            } `}
                                     >
                                         <div className="flex items-center gap-3">
-                                            <Icon className={`w-5 h-5 ${isSelected ? 'text-white' : 'text-slate-400'}`} />
+                                            <Icon className={`w - 5 h - 5 ${isSelected ? 'text-white' : 'text-slate-400'} `} />
                                             <span className="font-medium">{cmd.label}</span>
                                         </div>
                                         {isSelected && (

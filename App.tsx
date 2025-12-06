@@ -13,12 +13,15 @@ import { CommandPalette } from './components/CommandPalette';
 import { BottomNav } from './components/BottomNav';
 import { NoiseOverlay } from './components/NoiseOverlay';
 
-type View = 'explore' | 'dashboard' | 'community' | 'blog' | 'resources';
+import { AdminDashboard } from './components/AdminDashboard';
+
+type View = 'explore' | 'dashboard' | 'community' | 'blog' | 'resources' | 'admin';
 
 function AppContent() {
     const [currentView, setCurrentView] = useState<View>('explore');
     const [user, setUser] = useState(CURRENT_USER);
     const [myExperiments, setMyExperiments] = useState<Experiment[]>(USER_EXPERIMENTS);
+    const [protocols, setProtocols] = useState<Protocol[]>(SAMPLE_PROTOCOLS);
     const { theme, toggleTheme } = useTheme();
 
     // Command Palette State
@@ -29,6 +32,31 @@ function AppContent() {
     const [aiGoal, setAiGoal] = useState('');
     const [aiTime, setAiTime] = useState('');
     const [isGenerating, setIsGenerating] = useState(false);
+
+    const handleUpdateProtocol = (updatedProtocol: Protocol) => {
+        setProtocols(protocols.map(p => p.id === updatedProtocol.id ? updatedProtocol : p));
+    };
+
+    const handleAddProtocol = (newProtocol: Protocol) => {
+        setProtocols([newProtocol, ...protocols]);
+    };
+
+    const handleDeleteProtocol = (id: string) => {
+        setProtocols(protocols.filter(p => p.id !== id));
+    };
+
+    // Handle Custom Navigation Events (from Command Palette)
+    useEffect(() => {
+        const handleNavigation = (e: Event) => {
+            const customEvent = e as CustomEvent;
+            if (customEvent.detail) {
+                setCurrentView(customEvent.detail as View);
+            }
+        };
+
+        window.addEventListener('navigate-to-view', handleNavigation);
+        return () => window.removeEventListener('navigate-to-view', handleNavigation);
+    }, []);
 
     // Global Keyboard Shortcuts
     useEffect(() => {
@@ -187,9 +215,10 @@ function AppContent() {
             <main className="flex-1 md:ml-72 p-0 md:p-0 w-full relative bg-slate-50 dark:bg-transparent transition-colors duration-300 z-10">
                 {/* Dynamic Content */}
                 <div className="animate-fade-in-up min-h-screen pt-16 md:pt-0 pb-24 md:pb-0">
-                    {currentView === 'explore' && (
-                        <ProtocolExplorer onSelectProtocol={(p) => console.log('Selected', p)} />
-                    )}
+                    {currentView === 'explore' && <ProtocolExplorer protocols={protocols} onSelectProtocol={(p) => {
+                        // Handle selection
+                        console.log('Selected:', p);
+                    }} />}
                     <div className="p-6 md:p-12 max-w-7xl mx-auto">
                         {currentView === 'dashboard' && (
                             <UserDashboard user={user} experiments={myExperiments} />
@@ -200,8 +229,15 @@ function AppContent() {
                         {currentView === 'blog' && (
                             <BlogPage onBack={() => setCurrentView('explore')} />
                         )}
-                        {currentView === 'resources' && (
-                            <ResourcesPage />
+                        {currentView === 'resources' && <ResourcesPage />}
+                        {currentView === 'admin' && (
+                            <AdminDashboard
+                                protocols={protocols}
+                                onUpdateProtocol={handleUpdateProtocol}
+                                onAddProtocol={handleAddProtocol}
+                                onDeleteProtocol={handleDeleteProtocol}
+                                onBack={() => setCurrentView('explore')}
+                            />
                         )}
                     </div>
                 </div>

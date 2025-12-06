@@ -15,6 +15,7 @@ const MEETUP_CITIES = [
 
 interface ProtocolExplorerProps {
     onSelectProtocol: (protocol: Protocol) => void;
+    protocols?: Protocol[];
 }
 
 const CATEGORY_CARDS = [
@@ -92,11 +93,16 @@ const CATEGORY_CARDS = [
     }
 ];
 
-export const ProtocolExplorer: React.FC<ProtocolExplorerProps> = ({ onSelectProtocol }) => {
+export const ProtocolExplorer: React.FC<ProtocolExplorerProps> = ({ onSelectProtocol, protocols: propProtocols }) => {
     const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
     const [showMeetupModal, setShowMeetupModal] = useState(false);
     const [showSubmitModal, setShowSubmitModal] = useState(false);
-    const [protocols, setProtocols] = useState<Protocol[]>(SAMPLE_PROTOCOLS);
+
+    // Use prop protocols if available, otherwise default to constant
+    // We use a local state to allow the "Submit" button to still visually work for the user session
+    const [localProtocols, setLocalProtocols] = useState<Protocol[]>([]);
+
+    const allProtocols = [...(propProtocols || SAMPLE_PROTOCOLS), ...localProtocols];
 
     // Form state
     const [newProtocol, setNewProtocol] = useState<Partial<Protocol>>({
@@ -107,7 +113,7 @@ export const ProtocolExplorer: React.FC<ProtocolExplorerProps> = ({ onSelectProt
         steps: ['']
     });
 
-    const filteredProtocols = protocols.filter(p =>
+    const filteredProtocols = allProtocols.filter(p =>
         selectedCategory ? p.category === selectedCategory : true
     );
 
@@ -130,7 +136,7 @@ export const ProtocolExplorer: React.FC<ProtocolExplorerProps> = ({ onSelectProt
             steps: newProtocol.steps || []
         };
 
-        setProtocols([protocol, ...protocols]);
+        setLocalProtocols([protocol, ...localProtocols]);
         setShowSubmitModal(false);
         setNewProtocol({
             title: '',
@@ -204,8 +210,8 @@ export const ProtocolExplorer: React.FC<ProtocolExplorerProps> = ({ onSelectProt
 
                                 {/* Icon/Image Placeholder */}
                                 <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${protocol.difficulty === Difficulty.Extreme ? 'bg-red-500/10 text-red-500' :
-                                        protocol.difficulty === Difficulty.Hard ? 'bg-orange-500/10 text-orange-500' :
-                                            'bg-blue-500/10 text-blue-500'
+                                    protocol.difficulty === Difficulty.Hard ? 'bg-orange-500/10 text-orange-500' :
+                                        'bg-blue-500/10 text-blue-500'
                                     }`}>
                                     <Zap className="w-5 h-5" />
                                 </div>

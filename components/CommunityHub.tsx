@@ -376,8 +376,8 @@ export const CommunityHub: React.FC = () => {
                     <button
                         onClick={() => setActiveTab('feed')}
                         className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium transition-all ${activeTab === 'feed'
-                                ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/20'
-                                : 'bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white'
+                            ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/20'
+                            : 'bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white'
                             }`}
                     >
                         <MessageSquare className="w-4 h-4" />
@@ -386,8 +386,8 @@ export const CommunityHub: React.FC = () => {
                     <button
                         onClick={() => setActiveTab('places')}
                         className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium transition-all ${activeTab === 'places'
-                                ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/20'
-                                : 'bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white'
+                            ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/20'
+                            : 'bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white'
                             }`}
                     >
                         <Map className="w-4 h-4" />
@@ -466,8 +466,9 @@ export const CommunityHub: React.FC = () => {
                                         <button className="flex items-center gap-1.5 hover:text-blue-400 transition-colors text-sm">
                                             <MessageSquare className="w-4 h-4" /> {post.comments}
                                         </button>
-                                        <button className="flex items-center gap-1.5 hover:text-white transition-colors text-sm ml-auto">
-                                            <Share2 className="w-4 h-4" /> Share
+                                        <button className="flex items-center gap-2 px-5 py-2.5 bg-blue-600 rounded-xl text-white shadow-lg shadow-blue-900/20 text-sm font-medium">
+                                            <TrendingUp className="w-4 h-4" />
+                                            Contrarian Feed
                                         </button>
                                     </div>
                                 </div>
@@ -571,8 +572,8 @@ export const CommunityHub: React.FC = () => {
                             <button
                                 onClick={() => setSelectedPlaceType('all')}
                                 className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${selectedPlaceType === 'all'
-                                        ? 'bg-white/10 text-white border border-white/20'
-                                        : 'bg-white/5 text-slate-400 border border-transparent hover:bg-white/10'
+                                    ? 'bg-white/10 text-white border border-white/20'
+                                    : 'bg-white/5 text-slate-400 border border-transparent hover:bg-white/10'
                                     }`}
                             >
                                 All Places
@@ -582,8 +583,8 @@ export const CommunityHub: React.FC = () => {
                                     key={type}
                                     onClick={() => setSelectedPlaceType(type as Place['type'])}
                                     className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all border ${selectedPlaceType === type
-                                            ? config.color + ' border-current'
-                                            : 'bg-white/5 text-slate-400 border-transparent hover:bg-white/10'
+                                        ? config.color + ' border-current'
+                                        : 'bg-white/5 text-slate-400 border-transparent hover:bg-white/10'
                                         }`}
                                 >
                                     {config.icon}
@@ -675,7 +676,7 @@ export const CommunityHub: React.FC = () => {
                 {/* Main Feed */}
                 <div className="lg:col-span-2 space-y-8">
                     <div className="flex items-center justify-between border-b border-white/5 pb-4">
-                        <h2 className="text-xl font-medium text-white">Global Feed</h2>
+                        <h2 className="text-xl font-medium text-white">Contrarian Feed</h2>
                         <div className="flex bg-white/5 rounded-lg p-1">
                             <button className="text-xs font-medium text-slate-400 hover:text-white px-4 py-1.5 transition-colors rounded-md">Hot</button>
                             <button className="text-xs font-medium text-white bg-slate-800 px-4 py-1.5 rounded-md shadow-sm">New</button>
