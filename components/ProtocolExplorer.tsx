@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Protocol, Category, Difficulty } from '../types';
 import { SAMPLE_PROTOCOLS } from '../constants';
 import { Users, CheckCircle, Clock, Zap, ArrowLeft, Dumbbell, Apple, Briefcase, Cpu, Brain, Leaf, MapPin, Calendar, X, Plus, AlertCircle, ChevronRight, Trophy, Bot, Banknote } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { SpotlightCard } from './SpotlightCard';
 
 const MEETUP_CITIES = [
     { id: 'berlin', city: 'Berlin', country: 'Germany', nextMeetup: 'Dec 12, 2025', members: 156, venue: 'Factory Berlin Mitte' },
@@ -184,78 +186,90 @@ export const ProtocolExplorer: React.FC<ProtocolExplorerProps> = ({ onSelectProt
                     </button>
                 </div>
 
-                <div className="space-y-3">
-                    {filteredProtocols.length > 0 ? filteredProtocols.map((protocol, index) => (
-                        <div
-                            key={protocol.id}
-                            onClick={() => onSelectProtocol(protocol)}
-                            className="group flex items-center gap-4 bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 rounded-xl p-4 hover:bg-slate-50 dark:hover:bg-white/[0.05] hover:border-blue-500/30 transition-all duration-200 cursor-pointer"
-                        >
-                            {/* Rank / Index */}
-                            <span className="w-6 text-center text-xs font-mono text-slate-400 dark:text-slate-600 font-medium">#{index + 1}</span>
-
-                            {/* Icon/Image Placeholder */}
-                            <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${protocol.difficulty === Difficulty.Extreme ? 'bg-red-500/10 text-red-500' :
-                                    protocol.difficulty === Difficulty.Hard ? 'bg-orange-500/10 text-orange-500' :
-                                        'bg-blue-500/10 text-blue-500'
-                                }`}>
-                                <Zap className="w-5 h-5" />
-                            </div>
-
-                            {/* Main Info */}
-                            <div className="flex-1 min-w-0">
-                                <div className="flex items-center gap-2 mb-0.5">
-                                    <h3 className="text-base font-medium text-slate-900 dark:text-white truncate group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                                        {protocol.title}
-                                    </h3>
-                                    {!protocol.verified && (
-                                        <span className="px-1.5 py-0.5 rounded text-[10px] font-bold uppercase bg-yellow-500/10 text-yellow-600 dark:text-yellow-400 border border-yellow-500/20">
-                                            Community
-                                        </span>
-                                    )}
-                                </div>
-                                <p className="text-sm text-slate-500 dark:text-slate-400 truncate font-light">
-                                    {protocol.description}
-                                </p>
-                            </div>
-
-                            {/* Stats Columns - Hidden on mobile, visible on desktop */}
-                            <div className="hidden md:flex items-center gap-8 text-sm">
-                                <div className="w-24">
-                                    <div className="flex items-center gap-1.5 text-slate-600 dark:text-slate-400">
-                                        <Clock className="w-3.5 h-3.5" />
-                                        <span className="font-mono text-xs">{protocol.durationDays}d</span>
-                                    </div>
-                                </div>
-                                <div className="w-24">
-                                    <div className="flex items-center gap-1.5 text-slate-600 dark:text-slate-400">
-                                        <Users className="w-3.5 h-3.5" />
-                                        <span className="font-mono text-xs">{(protocol.participantCount / 1000).toFixed(1)}k</span>
-                                    </div>
-                                </div>
-                                <div className="w-20 text-right">
-                                    <div className="inline-flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded-md">
-                                        <Trophy className="w-3 h-3" />
-                                        <span className="font-mono text-xs font-bold">{protocol.successRate}%</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Chevron */}
-                            <ChevronRight className="w-5 h-5 text-slate-300 dark:text-slate-600 group-hover:text-slate-500 dark:group-hover:text-slate-400 transition-colors" />
-                        </div>
-                    )) : (
-                        <div className="text-center py-20 border border-dashed border-slate-200 dark:border-white/10 rounded-xl bg-slate-50 dark:bg-white/5">
-                            <p className="text-slate-500 font-light">No protocols found.</p>
-                            <button
-                                onClick={() => setShowSubmitModal(true)}
-                                className="mt-4 text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 text-sm font-medium transition-colors"
+                <motion.div layout className="space-y-3">
+                    <AnimatePresence mode="popLayout">
+                        {filteredProtocols.length > 0 ? filteredProtocols.map((protocol, index) => (
+                            <motion.div
+                                layout
+                                key={protocol.id}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, scale: 0.95 }}
+                                transition={{ duration: 0.2 }}
+                                onClick={() => onSelectProtocol(protocol)}
+                                className="group flex items-center gap-4 bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 rounded-xl p-4 hover:bg-slate-50 dark:hover:bg-white/[0.05] hover:border-blue-500/30 transition-all duration-200 cursor-pointer"
                             >
-                                Submit an experiment request
-                            </button>
-                        </div>
-                    )}
-                </div>
+                                {/* Rank / Index */}
+                                <span className="w-6 text-center text-xs font-mono text-slate-400 dark:text-slate-600 font-medium">#{index + 1}</span>
+
+                                {/* Icon/Image Placeholder */}
+                                <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${protocol.difficulty === Difficulty.Extreme ? 'bg-red-500/10 text-red-500' :
+                                        protocol.difficulty === Difficulty.Hard ? 'bg-orange-500/10 text-orange-500' :
+                                            'bg-blue-500/10 text-blue-500'
+                                    }`}>
+                                    <Zap className="w-5 h-5" />
+                                </div>
+
+                                {/* Main Info */}
+                                <div className="flex-1 min-w-0">
+                                    <div className="flex items-center gap-2 mb-0.5">
+                                        <h3 className="text-base font-medium text-slate-900 dark:text-white truncate group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                                            {protocol.title}
+                                        </h3>
+                                        {!protocol.verified && (
+                                            <span className="px-1.5 py-0.5 rounded text-[10px] font-bold uppercase bg-yellow-500/10 text-yellow-600 dark:text-yellow-400 border border-yellow-500/20">
+                                                Community
+                                            </span>
+                                        )}
+                                    </div>
+                                    <p className="text-sm text-slate-500 dark:text-slate-400 truncate font-light">
+                                        {protocol.description}
+                                    </p>
+                                </div>
+
+                                {/* Stats Columns - Hidden on mobile, visible on desktop */}
+                                <div className="hidden md:flex items-center gap-8 text-sm">
+                                    <div className="w-24">
+                                        <div className="flex items-center gap-1.5 text-slate-600 dark:text-slate-400">
+                                            <Clock className="w-3.5 h-3.5" />
+                                            <span className="font-mono text-xs">{protocol.durationDays}d</span>
+                                        </div>
+                                    </div>
+                                    <div className="w-24">
+                                        <div className="flex items-center gap-1.5 text-slate-600 dark:text-slate-400">
+                                            <Users className="w-3.5 h-3.5" />
+                                            <span className="font-mono text-xs">{(protocol.participantCount / 1000).toFixed(1)}k</span>
+                                        </div>
+                                    </div>
+                                    <div className="w-20 text-right">
+                                        <div className="inline-flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded-md">
+                                            <Trophy className="w-3 h-3" />
+                                            <span className="font-mono text-xs font-bold">{protocol.successRate}%</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Chevron */}
+                                <ChevronRight className="w-5 h-5 text-slate-300 dark:text-slate-600 group-hover:text-slate-500 dark:group-hover:text-slate-400 transition-colors" />
+                            </motion.div>
+                        )) : (
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                className="text-center py-20 border border-dashed border-slate-200 dark:border-white/10 rounded-xl bg-slate-50 dark:bg-white/5"
+                            >
+                                <p className="text-slate-500 font-light">No protocols found.</p>
+                                <button
+                                    onClick={() => setShowSubmitModal(true)}
+                                    className="mt-4 text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 text-sm font-medium transition-colors"
+                                >
+                                    Submit an experiment request
+                                </button>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                </motion.div>
 
                 {/* Submit Protocol Modal */}
                 {showSubmitModal && (
@@ -411,32 +425,45 @@ export const ProtocolExplorer: React.FC<ProtocolExplorerProps> = ({ onSelectProt
             </div>
 
             {/* Categories Grid - 2 Columns */}
-            <div className="max-w-5xl mx-auto px-4 md:px-8 grid grid-cols-2 gap-3 md:gap-4">
-                {CATEGORY_CARDS.map((card) => {
-                    const Icon = card.icon;
-                    return (
-                        <div
-                            key={card.id}
-                            onClick={() => setSelectedCategory(card.category)}
-                            className="group flex items-center gap-3 bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 p-4 rounded-xl hover:bg-slate-50 dark:hover:bg-white/[0.05] hover:border-slate-300 dark:hover:border-white/10 transition-all duration-200 cursor-pointer shadow-sm hover:shadow-md"
-                        >
-                            {/* Icon */}
-                            <div className={`p-2.5 rounded-lg ${card.bg} border ${card.border} group-hover:scale-105 transition-transform duration-300 flex-shrink-0`}>
-                                <Icon className={`w-5 h-5 ${card.color}`} strokeWidth={2} />
-                            </div>
+            <div className="max-w-5xl mx-auto px-4 md:px-8">
+                <motion.div
+                    layout
+                    className="grid grid-cols-2 gap-3 md:gap-4"
+                >
+                    <AnimatePresence mode="popLayout">
+                        {CATEGORY_CARDS.map((card, index) => {
+                            const Icon = card.icon;
+                            return (
+                                <SpotlightCard
+                                    key={card.id}
+                                    layout
+                                    initial={{ opacity: 0, scale: 0.9 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 0.9 }}
+                                    transition={{ duration: 0.3, delay: index * 0.05 }}
+                                    onClick={() => setSelectedCategory(card.category)}
+                                    className="group flex items-center gap-3 bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 p-4 rounded-xl hover:bg-slate-50 dark:hover:bg-white/[0.05] hover:border-slate-300 dark:hover:border-white/10 cursor-pointer shadow-sm hover:shadow-md"
+                                    spotlightColor="rgba(255, 255, 255, 0.05)"
+                                >
+                                    {/* Icon */}
+                                    <div className={`p-2.5 rounded-lg ${card.bg} border ${card.border} group-hover:scale-105 transition-transform duration-300 flex-shrink-0 relative z-10`}>
+                                        <Icon className={`w-5 h-5 ${card.color}`} strokeWidth={2} />
+                                    </div>
 
-                            {/* Content - Just Label */}
-                            <div className="flex-1 min-w-0">
-                                <h3 className="text-sm md:text-base font-semibold text-slate-900 dark:text-white tracking-tight">{card.label}</h3>
-                            </div>
+                                    {/* Content - Just Label */}
+                                    <div className="flex-1 min-w-0 relative z-10">
+                                        <h3 className="text-sm md:text-base font-semibold text-slate-900 dark:text-white tracking-tight">{card.label}</h3>
+                                    </div>
 
-                            {/* Chevron - Optional, keeping for affordance */}
-                            <div className="pl-1">
-                                <ChevronRight className="w-4 h-4 text-slate-300 dark:text-slate-600 group-hover:text-slate-500 dark:group-hover:text-slate-400 transition-colors" />
-                            </div>
-                        </div>
-                    );
-                })}
+                                    {/* Chevron */}
+                                    <div className="pl-1 relative z-10">
+                                        <ChevronRight className="w-4 h-4 text-slate-300 dark:text-slate-600 group-hover:text-slate-500 dark:group-hover:text-slate-400 transition-colors" />
+                                    </div>
+                                </SpotlightCard>
+                            );
+                        })}
+                    </AnimatePresence>
+                </motion.div>
             </div>
 
             {/* Footer Connect Banner */}

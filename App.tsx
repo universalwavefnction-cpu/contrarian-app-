@@ -11,6 +11,7 @@ import { generateCustomProtocol } from './services/geminiService';
 import { ThemeProvider, useTheme } from './components/ThemeContext';
 import { CommandPalette } from './components/CommandPalette';
 import { BottomNav } from './components/BottomNav';
+import { NoiseOverlay } from './components/NoiseOverlay';
 
 type View = 'explore' | 'dashboard' | 'community' | 'blog' | 'resources';
 
@@ -82,8 +83,9 @@ function AppContent() {
     );
     return (
         <div className="min-h-screen bg-slate-50 dark:bg-midnight-950 text-slate-900 dark:text-slate-200 flex font-sans transition-colors duration-300 relative overflow-hidden">
+            <NoiseOverlay />
 
-            {/* Ambient Background Gradient for Dark Mode */}
+            {/* Ambient Background Gradient for Dark Mode (Aurora) */}
             <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-0 dark:opacity-100 transition-opacity duration-1000">
                 <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-aurora-magenta/10 blur-[120px] rounded-full mix-blend-screen"></div>
                 <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-aurora-teal/10 blur-[100px] rounded-full mix-blend-screen"></div>
