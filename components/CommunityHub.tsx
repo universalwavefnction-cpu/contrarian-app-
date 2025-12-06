@@ -777,7 +777,7 @@ export const CommunityHub: React.FC = () => {
                     {/* Leaderboard */}
                     <div className="bg-black/20 backdrop-blur-md border border-white/5 rounded-2xl p-6">
                         <h3 className="text-white font-medium mb-6 flex items-center gap-2 text-sm uppercase tracking-widest">
-                            <TrendingUp className="w-4 h-4 text-yellow-500" /> Monthly Rankings
+                            <TrendingUp className="w-4 h-4 text-yellow-500" /> Members
                         </h3>
                         <div className="space-y-3">
                             {[1, 2, 3, 4, 5].map((rank) => (
