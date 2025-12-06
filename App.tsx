@@ -186,12 +186,12 @@ function AppContent() {
 
                 <div className="p-4 border-t border-slate-200 dark:border-white/5 space-y-4">
                     <button
-                        onClick={() => setIsAIGeneratorOpen(true)}
+                        onClick={() => setCurrentView('lab')}
                         className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-aurora-pink to-aurora-magenta hover:from-aurora-peach hover:to-aurora-pink text-white py-3.5 rounded-xl transition-all shadow-lg shadow-aurora-magenta/20 hover:shadow-aurora-magenta/40 group relative overflow-hidden"
                     >
                         <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
                         <Sparkles className="w-4 h-4 relative z-10" />
-                        <span className="font-semibold text-sm relative z-10">AI Protocol Gen</span>
+                        <span className="font-semibold text-sm relative z-10">The Lab (AI)</span>
                     </button>
 
                     <div className="flex items-center gap-3 px-2 pb-2">
@@ -249,8 +249,17 @@ function AppContent() {
             <BottomNav
                 currentView={currentView}
                 onNavigate={(view) => setCurrentView(view)}
-                onOpenAI={() => setIsAIGeneratorOpen(true)}
+                onOpenAI={() => setCurrentView('lab')}
             />
+
+            {/* Floating Action Button for The Lab */}
+            <button
+                onClick={() => setCurrentView('lab')}
+                className="fixed bottom-24 md:bottom-8 right-6 md:right-8 w-16 h-16 bg-gradient-to-tr from-aurora-pink to-aurora-magenta rounded-full flex items-center justify-center shadow-lg shadow-aurora-magenta/30 hover:scale-110 hover:shadow-aurora-magenta/50 transition-all z-50 group"
+            >
+                <Sparkles className="w-8 h-8 text-white animate-pulse" />
+                <div className="absolute inset-0 rounded-full bg-white/20 scale-0 group-hover:scale-100 transition-transform duration-500"></div>
+            </button>
 
             {/* AI Modal Overlay */}
             {isAIGeneratorOpen && (
