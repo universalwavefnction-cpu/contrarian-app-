@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import { Layout, Compass, Activity, Users, PlusCircle, Menu, X, Sparkles, BrainCircuit, Search, TrendingUp, BookOpen } from 'lucide-react';
+import { Layout, Compass, Activity, Users, PlusCircle, Menu, X, Sparkles, BrainCircuit, Search, TrendingUp, BookOpen, Library } from 'lucide-react';
 import { Protocol, Experiment } from './types';
 import { CURRENT_USER, SAMPLE_PROTOCOLS, USER_EXPERIMENTS } from './constants';
 import { ProtocolExplorer } from './components/ProtocolExplorer';
 import { UserDashboard } from './components/UserDashboard';
 import { CommunityHub } from './components/CommunityHub';
 import { BlogPage } from './components/BlogPage';
+import { ResourcesPage } from './components/ResourcesPage';
 import { generateCustomProtocol } from './services/geminiService';
 
-type View = 'explore' | 'dashboard' | 'community' | 'blog';
+type View = 'explore' | 'dashboard' | 'community' | 'blog' | 'resources';
 
 export default function App() {
     const [currentView, setCurrentView] = useState<View>('explore');
@@ -92,6 +93,13 @@ export default function App() {
                         <BookOpen className={`w-5 h-5 ${currentView === 'blog' ? 'text-blue-400' : 'text-slate-500 group-hover:text-blue-400'} transition-colors`} />
                         <span className="font-medium tracking-wide text-sm">Blog</span>
                     </button>
+                    <button
+                        onClick={() => setCurrentView('resources')}
+                        className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl transition-all duration-300 group ${currentView === 'resources' ? 'bg-white/5 text-white shadow-inner border border-white/5' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
+                    >
+                        <Library className={`w-5 h-5 ${currentView === 'resources' ? 'text-blue-400' : 'text-slate-500 group-hover:text-blue-400'} transition-colors`} />
+                        <span className="font-medium tracking-wide text-sm">Resources</span>
+                    </button>
                 </nav>
 
                 <div className="p-4 border-t border-white/5">
@@ -117,16 +125,13 @@ export default function App() {
                 </div>
             </aside>
 
-            {/* Mobile Header */}
-            <div className="md:hidden fixed top-0 w-full z-30 bg-slate-950/80 backdrop-blur-lg border-b border-white/5 p-4 flex items-center justify-between">
-                <BrandLogo />
-                <button className="text-white bg-white/5 p-2 rounded-lg">
-                    <Menu className="w-6 h-6" />
-                </button>
-            </div>
+            {/* Mobile Menu Button - Floating */}
+            <button className="md:hidden fixed top-4 right-4 z-30 text-white bg-black/50 backdrop-blur-md p-2.5 rounded-full border border-white/10 shadow-lg">
+                <Menu className="w-5 h-5" />
+            </button>
 
             {/* Main Content Area */}
-            <main className="flex-1 md:ml-72 p-0 md:p-0 mt-20 md:mt-0 w-full relative">
+            <main className="flex-1 md:ml-72 p-0 md:p-0 w-full relative">
                 {/* Dynamic Content */}
                 <div className="animate-fade-in-up min-h-screen">
                     {currentView === 'explore' && (
@@ -141,6 +146,9 @@ export default function App() {
                         )}
                         {currentView === 'blog' && (
                             <BlogPage onBack={() => setCurrentView('explore')} />
+                        )}
+                        {currentView === 'resources' && (
+                            <ResourcesPage />
                         )}
                     </div>
                 </div>
