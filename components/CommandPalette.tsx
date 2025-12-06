@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Search, Command, ArrowRight, Sun, Moon, Layout, Compass, Activity, Users, BookOpen, Library, Plus, Sparkles } from 'lucide-react';
+import { Search, Command, ArrowRight, Sun, Moon, Layout, Compass, Activity, Users, BookOpen, Library, Plus, Sparkles, Cpu } from 'lucide-react';
 import { useTheme } from './ThemeContext';
 
 interface CommandPaletteProps {
@@ -30,6 +30,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose,
         { id: 'nav-community', label: 'Community Hub', icon: Users, group: 'Navigation', action: () => onNavigate('community') },
         { id: 'nav-blog', label: 'Read Blog', icon: BookOpen, group: 'Navigation', action: () => onNavigate('blog') },
         { id: 'nav-resources', label: 'Resources', icon: Library, group: 'Navigation', action: () => onNavigate('resources') },
+        { id: 'nav-lab', label: 'The Lab (AI)', icon: Cpu, group: 'Navigation', action: () => onNavigate('lab') },
 
         // Actions
         {
@@ -133,8 +134,8 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose,
                                         onClick={() => { cmd.action(); onClose(); }}
                                         onMouseEnter={() => setSelectedIndex(index)}
                                         className={`w - full flex items - center justify - between px - 3 py - 3 rounded - lg transition - colors ${isSelected
-                                                ? 'bg-blue-600 text-white'
-                                                : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5'
+                                            ? 'bg-blue-600 text-white'
+                                            : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5'
                                             } `}
                                     >
                                         <div className="flex items-center gap-3">

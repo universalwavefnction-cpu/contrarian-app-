@@ -14,8 +14,9 @@ import { BottomNav } from './components/BottomNav';
 import { NoiseOverlay } from './components/NoiseOverlay';
 
 import { AdminDashboard } from './components/AdminDashboard';
+import { AILab } from './components/AILab';
 
-type View = 'explore' | 'dashboard' | 'community' | 'blog' | 'resources' | 'admin';
+type View = 'explore' | 'dashboard' | 'community' | 'blog' | 'resources' | 'admin' | 'lab';
 
 function AppContent() {
     const [currentView, setCurrentView] = useState<View>('explore');
@@ -239,6 +240,7 @@ function AppContent() {
                                 onBack={() => setCurrentView('explore')}
                             />
                         )}
+                        {currentView === 'lab' && <AILab />}
                     </div>
                 </div>
             </main>
