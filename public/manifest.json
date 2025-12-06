@@ -1,0 +1,22 @@
+{
+    "name": "Contrarian Hub",
+    "short_name": "Contrarian",
+    "description": "Optimizing Human Potential through data-driven protocols.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#020617",
+    "theme_color": "#020617",
+    "orientation": "portrait",
+    "icons": [
+        {
+            "src": "https://cdn.lucide.dev/icon/trending-up.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "https://cdn.lucide.dev/icon/trending-up.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}

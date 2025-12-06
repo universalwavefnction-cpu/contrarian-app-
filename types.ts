@@ -7,7 +7,9 @@ export enum Category {
   Science = 'Science',
   Fitness = 'Fitness',
   Nutrition = 'Nutrition',
-  Productivity = 'Productivity'
+  Productivity = 'Productivity',
+  AI = 'AI Use',
+  Money = 'Money'
 }
 
 export enum Difficulty {
@@ -70,7 +72,10 @@ export interface BlogPost {
   title: string;
   excerpt: string;
   content: string;
-  author: string;
+  author: {
+    name: string;
+    avatar: string;
+  };
   date: string;
   readTime: string;
   category: Category;

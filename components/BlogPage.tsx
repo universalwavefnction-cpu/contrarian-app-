@@ -1,165 +1,172 @@
 import React, { useState } from 'react';
 import { Category, BlogPost } from '../types';
 import { BLOG_POSTS } from '../constants';
-import { ArrowLeft, Clock, Tag, User, ChevronRight, BookOpen, Sparkles, Brain, Code, Briefcase, BookMarked, Flask, Dumbbell, Apple, Zap } from 'lucide-react';
+import { Search, Filter, Clock, ChevronRight, ArrowLeft, Dumbbell, Apple, Briefcase, Cpu, Brain, Leaf, Bot, Banknote, BookOpen } from 'lucide-react';
 
 interface BlogPageProps {
     onBack: () => void;
 }
 
-const categoryIcons: Record<Category, React.ReactNode> = {
-    [Category.Biohacking]: <Sparkles className="w-5 h-5" />,
-    [Category.Wellness]: <Brain className="w-5 h-5" />,
-    [Category.Coding]: <Code className="w-5 h-5" />,
+const CATEGORY_ICONS: Record<Category, React.ReactNode> = {
+    [Category.Biohacking]: <Cpu className="w-5 h-5" />,
+    [Category.Wellness]: <Leaf className="w-5 h-5" />,
+    [Category.Coding]: <Cpu className="w-5 h-5" />,
     [Category.Business]: <Briefcase className="w-5 h-5" />,
-    [Category.Philosophy]: <BookMarked className="w-5 h-5" />,
-    [Category.Science]: <Flask className="w-5 h-5" />,
+    [Category.Philosophy]: <Brain className="w-5 h-5" />,
+    [Category.Science]: <Cpu className="w-5 h-5" />,
     [Category.Fitness]: <Dumbbell className="w-5 h-5" />,
     [Category.Nutrition]: <Apple className="w-5 h-5" />,
-    [Category.Productivity]: <Zap className="w-5 h-5" />
+    [Category.Productivity]: <Briefcase className="w-5 h-5" />,
+    [Category.AI]: <Bot className="w-5 h-5" />,
+    [Category.Money]: <Banknote className="w-5 h-5" />
 };
 
-const categoryColors: Record<Category, { bg: string; border: string; text: string; gradient: string }> = {
-    [Category.Biohacking]: { bg: 'bg-purple-500/10', border: 'border-purple-500/20', text: 'text-purple-400', gradient: 'from-purple-500/20 to-violet-500/10' },
-    [Category.Wellness]: { bg: 'bg-emerald-500/10', border: 'border-emerald-500/20', text: 'text-emerald-400', gradient: 'from-emerald-500/20 to-teal-500/10' },
-    [Category.Coding]: { bg: 'bg-blue-500/10', border: 'border-blue-500/20', text: 'text-blue-400', gradient: 'from-blue-500/20 to-cyan-500/10' },
-    [Category.Business]: { bg: 'bg-amber-500/10', border: 'border-amber-500/20', text: 'text-amber-400', gradient: 'from-amber-500/20 to-orange-500/10' },
-    [Category.Philosophy]: { bg: 'bg-indigo-500/10', border: 'border-indigo-500/20', text: 'text-indigo-400', gradient: 'from-indigo-500/20 to-purple-500/10' },
-    [Category.Science]: { bg: 'bg-cyan-500/10', border: 'border-cyan-500/20', text: 'text-cyan-400', gradient: 'from-cyan-500/20 to-blue-500/10' },
-    [Category.Fitness]: { bg: 'bg-red-500/10', border: 'border-red-500/20', text: 'text-red-400', gradient: 'from-red-500/20 to-rose-500/10' },
-    [Category.Nutrition]: { bg: 'bg-green-500/10', border: 'border-green-500/20', text: 'text-green-400', gradient: 'from-green-500/20 to-emerald-500/10' },
-    [Category.Productivity]: { bg: 'bg-yellow-500/10', border: 'border-yellow-500/20', text: 'text-yellow-400', gradient: 'from-yellow-500/20 to-amber-500/10' }
+const CATEGORY_STYLES: Record<Category, { bg: string, border: string, text: string, gradient: string }> = {
+    [Category.Biohacking]: { bg: 'bg-purple-500/10', border: 'border-purple-500/20', text: 'text-purple-500', gradient: 'from-purple-500/20 to-indigo-500/20' },
+    [Category.Wellness]: { bg: 'bg-teal-500/10', border: 'border-teal-500/20', text: 'text-teal-500', gradient: 'from-teal-500/20 to-emerald-500/20' },
+    [Category.Coding]: { bg: 'bg-slate-500/10', border: 'border-slate-500/20', text: 'text-slate-500', gradient: 'from-slate-500/20 to-gray-500/20' },
+    [Category.Business]: { bg: 'bg-blue-500/10', border: 'border-blue-500/20', text: 'text-blue-500', gradient: 'from-blue-500/20 to-sky-500/20' },
+    [Category.Philosophy]: { bg: 'bg-yellow-500/10', border: 'border-yellow-500/20', text: 'text-yellow-500', gradient: 'from-yellow-500/20 to-amber-500/20' },
+    [Category.Science]: { bg: 'bg-indigo-500/10', border: 'border-indigo-500/20', text: 'text-indigo-500', gradient: 'from-indigo-500/20 to-violet-500/20' },
+    [Category.Fitness]: { bg: 'bg-emerald-500/10', border: 'border-emerald-500/20', text: 'text-emerald-500', gradient: 'from-emerald-500/20 to-green-500/20' },
+    [Category.Nutrition]: { bg: 'bg-orange-500/10', border: 'border-orange-500/20', text: 'text-orange-500', gradient: 'from-orange-500/20 to-red-500/20' },
+    [Category.Productivity]: { bg: 'bg-blue-500/10', border: 'border-blue-500/20', text: 'text-blue-500', gradient: 'from-blue-500/20 to-cyan-500/20' },
+    [Category.AI]: { bg: 'bg-fuchsia-500/10', border: 'border-fuchsia-500/20', text: 'text-fuchsia-500', gradient: 'from-fuchsia-500/20 to-purple-500/20' },
+    [Category.Money]: { bg: 'bg-green-500/10', border: 'border-green-500/20', text: 'text-green-500', gradient: 'from-green-500/20 to-emerald-500/20' }
 };
 
 export const BlogPage: React.FC<BlogPageProps> = ({ onBack }) => {
-    const [expandedCategory, setExpandedCategory] = useState<Category | null>(null);
+    const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
+    const [searchQuery, setSearchQuery] = useState('');
 
-    // Group posts by category
-    const postsByCategory = Object.values(Category).reduce((acc, category) => {
-        const posts = BLOG_POSTS.filter(post => post.category === category);
-        if (posts.length > 0) {
-            acc[category] = posts;
-        }
-        return acc;
-    }, {} as Record<Category, BlogPost[]>);
-
-    const categoriesWithPosts = Object.keys(postsByCategory) as Category[];
-
-    const BlogCard: React.FC<{ post: BlogPost; featured?: boolean }> = ({ post, featured = false }) => (
-        <article
-            className={`group bg-black/20 backdrop-blur-sm border border-white/5 rounded-2xl overflow-hidden hover:border-white/10 transition-all duration-300 hover:-translate-y-1 shadow-lg shadow-black/20 flex flex-col h-full ${featured ? 'md:col-span-2 md:flex-row' : ''}`}
-        >
-            <div className={`${featured ? 'md:w-1/2 h-48 md:h-auto' : 'h-48'} overflow-hidden relative`}>
-                <img
-                    src={post.imageUrl}
-                    alt={post.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute top-4 left-4">
-                    <span className={`px-3 py-1 ${categoryColors[post.category].bg} ${categoryColors[post.category].border} border backdrop-blur-md ${categoryColors[post.category].text} text-[10px] font-bold uppercase tracking-wider rounded-md`}>
-                        {post.category}
-                    </span>
-                </div>
-            </div>
-
-            <div className={`p-6 flex-1 flex flex-col ${featured ? 'md:w-1/2' : ''}`}>
-                <div className="flex items-center gap-3 text-xs text-slate-500 mb-4">
-                    <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {post.readTime}</span>
-                    <span>•</span>
-                    <span>{post.date}</span>
-                </div>
-
-                <h3 className={`${featured ? 'text-2xl' : 'text-xl'} font-medium text-white mb-3 group-hover:text-blue-400 transition-colors leading-snug`}>
-                    {post.title}
-                </h3>
-
-                <p className="text-slate-400 text-sm leading-relaxed mb-6 line-clamp-3 font-light flex-1">
-                    {post.excerpt}
-                </p>
-
-                <div className="flex items-center justify-between pt-6 border-t border-white/5 mt-auto">
-                    <div className="flex items-center gap-2">
-                        <div className="w-6 h-6 rounded-full bg-slate-800 flex items-center justify-center text-[10px] font-bold text-slate-400 border border-white/5">
-                            {post.author.charAt(0)}
-                        </div>
-                        <span className="text-xs text-slate-400 font-medium">{post.author}</span>
-                    </div>
-                    <button className="text-blue-400 text-xs font-bold uppercase tracking-wider flex items-center gap-1 group/btn">
-                        Read <ChevronRight className="w-3 h-3 group-hover/btn:translate-x-1 transition-transform" />
-                    </button>
-                </div>
-            </div>
-        </article>
-    );
+    const filteredPosts = BLOG_POSTS.filter(post => {
+        const matchesCategory = selectedCategory ? post.category === selectedCategory : true;
+        const matchesSearch = post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            post.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
+        return matchesCategory && matchesSearch;
+    });
 
     return (
-        <div className="animate-fade-in min-h-screen pb-20">
+        <div className="animate-fade-in w-full max-w-5xl mx-auto pb-20">
             {/* Header */}
-            <div className="bg-black/20 border-b border-white/5 pt-24 pb-12 px-6 md:px-12">
-                <div className="max-w-7xl mx-auto">
-                    <h1 className="text-4xl md:text-5xl font-light text-white mb-4 tracking-tight">
-                        Contrarian <span className="text-blue-400 font-medium">Insights</span>
-                    </h1>
-                    <p className="text-slate-400 text-lg max-w-2xl font-light">
-                        Deep dives into protocols, experiments, and the science of optimization.
-                    </p>
-                </div>
+            <div className="flex items-center justify-between mb-8">
+                <button
+                    onClick={onBack}
+                    className="group flex items-center gap-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
+                >
+                    <div className="p-2 rounded-full bg-slate-100 dark:bg-white/5 group-hover:bg-slate-200 dark:group-hover:bg-white/10 transition-colors">
+                        <ArrowLeft className="w-4 h-4" />
+                    </div>
+                    <span className="font-medium text-sm">Back to Explore</span>
+                </button>
+                <h1 className="text-2xl font-bold text-slate-900 dark:text-white">The Contrarian Blog</h1>
             </div>
 
-            <div className="max-w-7xl mx-auto px-6 md:px-12 py-12">
-                {/* Category Quick Nav */}
-                <div className="flex flex-wrap gap-3 mb-12">
-                    {categoriesWithPosts.map(category => (
-                        <a
-                            key={category}
-                            href={`#${category.toLowerCase().replace(/\s+/g, '-')}`}
-                            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border transition-all duration-300 hover:-translate-y-0.5 ${categoryColors[category].bg} ${categoryColors[category].border} ${categoryColors[category].text}`}
+            {/* Search and Filter */}
+            <div className="flex flex-col md:flex-row gap-4 mb-8">
+                <div className="relative flex-1">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                    <input
+                        type="text"
+                        placeholder="Search articles..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="w-full bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-blue-500/50 transition-colors text-slate-900 dark:text-white placeholder:text-slate-400"
+                    />
+                </div>
+                <div className="flex gap-2 overflow-x-auto pb-2 md:pb-0 no-scrollbar">
+                    <button
+                        onClick={() => setSelectedCategory(null)}
+                        className={`px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors ${!selectedCategory ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900' : 'bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-white/10'}`}
+                    >
+                        All
+                    </button>
+                    {Object.values(Category).map(cat => (
+                        <button
+                            key={cat}
+                            onClick={() => setSelectedCategory(cat)}
+                            className={`px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors border ${selectedCategory === cat ? `bg-${CATEGORY_STYLES[cat].text.split('-')[1]}-500/10 ${CATEGORY_STYLES[cat].border} ${CATEGORY_STYLES[cat].text}` : 'border-transparent bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-white/10'}`}
                         >
-                            {categoryIcons[category]}
-                            <span className="text-sm font-medium">{category}</span>
-                            <span className="text-xs opacity-60 ml-1">({postsByCategory[category].length})</span>
-                        </a>
+                            {cat}
+                        </button>
                     ))}
                 </div>
-
-                {/* Category Sections */}
-                {categoriesWithPosts.map(category => (
-                    <section
-                        key={category}
-                        id={category.toLowerCase().replace(/\s+/g, '-')}
-                        className="mb-16 scroll-mt-8"
-                    >
-                        {/* Category Header */}
-                        <div className={`flex items-center gap-4 mb-8 pb-4 border-b border-white/5`}>
-                            <div className={`w-12 h-12 rounded-xl ${categoryColors[category].bg} ${categoryColors[category].border} border flex items-center justify-center ${categoryColors[category].text}`}>
-                                {categoryIcons[category]}
-                            </div>
-                            <div>
-                                <h2 className="text-2xl font-semibold text-white">{category}</h2>
-                                <p className="text-sm text-slate-500">{postsByCategory[category].length} article{postsByCategory[category].length !== 1 ? 's' : ''}</p>
-                            </div>
-                        </div>
-
-                        {/* Posts Grid */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {postsByCategory[category].map((post, index) => (
-                                <BlogCard
-                                    key={post.id}
-                                    post={post}
-                                    featured={index === 0 && postsByCategory[category].length > 2}
-                                />
-                            ))}
-                        </div>
-                    </section>
-                ))}
-
-                {categoriesWithPosts.length === 0 && (
-                    <div className="text-center py-32 border border-dashed border-white/10 rounded-2xl bg-white/5">
-                        <BookOpen className="w-12 h-12 text-slate-600 mx-auto mb-4" />
-                        <p className="text-slate-500 font-light">No articles found yet.</p>
-                    </div>
-                )}
             </div>
+
+            {/* Featured Post (only if no search/filter) */}
+            {!selectedCategory && !searchQuery && BLOG_POSTS.length > 0 && (
+                <div className="mb-12 group cursor-pointer relative overflow-hidden rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5">
+                    <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div className="p-8 md:p-12 relative z-10">
+                        <div className="flex items-center gap-3 mb-4">
+                            <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${CATEGORY_STYLES[BLOG_POSTS[0].category].bg} ${CATEGORY_STYLES[BLOG_POSTS[0].category].text} border ${CATEGORY_STYLES[BLOG_POSTS[0].category].border}`}>
+                                {BLOG_POSTS[0].category}
+                            </span>
+                            <span className="text-slate-400 text-xs flex items-center gap-1">
+                                <Clock className="w-3 h-3" /> {BLOG_POSTS[0].readTime}
+                            </span>
+                        </div>
+                        <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                            {BLOG_POSTS[0].title}
+                        </h2>
+                        <p className="text-slate-500 dark:text-slate-400 text-lg mb-6 max-w-2xl line-clamp-2">
+                            {BLOG_POSTS[0].excerpt}
+                        </p>
+                        <div className="flex items-center gap-3">
+                            <img src={BLOG_POSTS[0].author.avatar} alt={BLOG_POSTS[0].author.name} className="w-10 h-10 rounded-full" />
+                            <div>
+                                <p className="text-sm font-medium text-slate-900 dark:text-white">{BLOG_POSTS[0].author.name}</p>
+                                <p className="text-xs text-slate-500">{BLOG_POSTS[0].date}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Post Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredPosts.map(post => (
+                    <div
+                        key={post.id}
+                        className="group flex flex-col bg-white dark:bg-white/5 border border-slate-200 dark:border-white/5 rounded-2xl overflow-hidden hover:border-slate-300 dark:hover:border-white/20 transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-black/5"
+                    >
+                        <div className={`h-2 w-full bg-gradient-to-r ${CATEGORY_STYLES[post.category].gradient}`}></div>
+                        <div className="p-6 flex-1 flex flex-col">
+                            <div className="flex items-center justify-between mb-4">
+                                <div className={`p-2 rounded-lg ${CATEGORY_STYLES[post.category].bg} ${CATEGORY_STYLES[post.category].text}`}>
+                                    {CATEGORY_ICONS[post.category]}
+                                </div>
+                                <span className="text-xs text-slate-400 flex items-center gap-1">
+                                    <Clock className="w-3 h-3" /> {post.readTime}
+                                </span>
+                            </div>
+                            <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2">
+                                {post.title}
+                            </h3>
+                            <p className="text-slate-500 dark:text-slate-400 text-sm mb-4 line-clamp-3 flex-1">
+                                {post.excerpt}
+                            </p>
+                            <div className="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-white/5">
+                                <div className="flex items-center gap-2">
+                                    <img src={post.author.avatar} alt={post.author.name} className="w-6 h-6 rounded-full" />
+                                    <span className="text-xs font-medium text-slate-600 dark:text-slate-300">{post.author.name}</span>
+                                </div>
+                                <span className="text-xs text-slate-400">{post.date}</span>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+            {filteredPosts.length === 0 && (
+                <div className="text-center py-20">
+                    <div className="w-16 h-16 bg-slate-100 dark:bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <BookOpen className="w-8 h-8 text-slate-400" />
+                    </div>
+                    <h3 className="text-lg font-medium text-slate-900 dark:text-white mb-1">No articles found</h3>
+                    <p className="text-slate-500 dark:text-slate-400">Try adjusting your search or category filter.</p>
+                </div>
+            )}
         </div>
     );
 };
