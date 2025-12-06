@@ -86,12 +86,11 @@ function AppContent() {
             <NoiseOverlay />
 
             {/* Ambient Background Gradient for Dark Mode (Aurora) */}
-            <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-0 dark:opacity-100 transition-opacity duration-1000">
-                <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-aurora-magenta/10 blur-[120px] rounded-full mix-blend-screen"></div>
-                <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-aurora-teal/10 blur-[100px] rounded-full mix-blend-screen"></div>
+            <div className="fixed inset-0 w-full h-full pointer-events-none opacity-0 dark:opacity-100 transition-opacity duration-1000 overflow-hidden">
+                <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-aurora-magenta/10 blur-[120px] rounded-full mix-blend-screen transform-gpu"></div>
+                <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-aurora-teal/10 blur-[100px] rounded-full mix-blend-screen transform-gpu"></div>
+                <div className="absolute top-[40%] left-[30%] w-[30%] h-[30%] bg-aurora-purple/10 blur-[100px] rounded-full mix-blend-screen transform-gpu"></div>
             </div>
-
-
 
             {/* Command Palette */}
             <CommandPalette
