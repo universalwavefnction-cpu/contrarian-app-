@@ -24,6 +24,7 @@ function AppContent() {
     const [myExperiments, setMyExperiments] = useState<Experiment[]>(USER_EXPERIMENTS);
     const [protocols, setProtocols] = useState<Protocol[]>(SAMPLE_PROTOCOLS);
     const { theme, toggleTheme } = useTheme();
+    const [exploreKey, setExploreKey] = useState(0);
 
     // Command Palette State
     const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
@@ -90,9 +91,14 @@ function AppContent() {
         }
     };
 
+    const handleNavigateHome = () => {
+        setCurrentView('explore');
+        setExploreKey(prev => prev + 1);
+    };
+
     const BrandLogo = () => (
         <div
-            onClick={() => setCurrentView('explore')}
+            onClick={handleNavigateHome}
             className="flex items-center gap-3 select-none group cursor-pointer active:scale-95 transition-transform"
         >
             <div className="relative">
@@ -151,7 +157,7 @@ function AppContent() {
                     </button>
 
                     <button
-                        onClick={() => setCurrentView('explore')}
+                        onClick={handleNavigateHome}
                         className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl transition-all duration-300 group ${currentView === 'explore' ? 'bg-slate-100 dark:bg-white/10 text-blue-600 dark:text-white shadow-sm dark:shadow-inner border border-slate-200 dark:border-white/5' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5'}`}
                     >
                         <Compass className={`w-5 h-5 ${currentView === 'explore' ? 'text-blue-600 dark:text-aurora-peach' : 'text-slate-400 dark:text-slate-500 group-hover:text-blue-600 dark:group-hover:text-aurora-peach'} transition-colors`} />
@@ -219,7 +225,7 @@ function AppContent() {
             <main className="flex-1 md:ml-72 p-0 md:p-0 w-full relative bg-slate-50 dark:bg-transparent transition-colors duration-300 z-10">
                 {/* Dynamic Content */}
                 <div className="animate-fade-in-up min-h-screen pt-16 md:pt-0 pb-24 md:pb-0">
-                    {currentView === 'explore' && <ProtocolExplorer protocols={protocols} onSelectProtocol={(p) => {
+                    {currentView === 'explore' && <ProtocolExplorer key={exploreKey} protocols={protocols} onSelectProtocol={(p) => {
                         // Handle selection
                         console.log('Selected:', p);
                     }} />}
@@ -251,7 +257,13 @@ function AppContent() {
             {/* Mobile Bottom Navigation */}
             <BottomNav
                 currentView={currentView}
-                onNavigate={(view) => setCurrentView(view)}
+                onNavigate={(view) => {
+                    if (view === 'explore') {
+                        handleNavigateHome();
+                    } else {
+                        setCurrentView(view);
+                    }
+                }}
                 onOpenAI={() => setCurrentView('lab')}
             />
 
