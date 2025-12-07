@@ -428,9 +428,6 @@ export const ProtocolExplorer: React.FC<ProtocolExplorerProps> = ({ onSelectProt
                         <p className="text-slate-600 dark:text-slate-300 text-lg md:text-xl font-light">
                             Pick a domain to start experimenting.
                         </p>
-                        <p className="text-slate-500 dark:text-slate-500 text-xs md:text-sm uppercase tracking-widest font-medium">
-                            No gurus. No universal answers. <span className="text-slate-900 dark:text-white">Just honest data.</span>
-                        </p>
                     </div>
                 </div>
             </div>
