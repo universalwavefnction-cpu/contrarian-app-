@@ -93,7 +93,7 @@ function AppContent() {
     const BrandLogo = () => (
         <div
             onClick={() => setCurrentView('explore')}
-            className="flex items-center gap-3 select-none group cursor-pointer"
+            className="flex items-center gap-3 select-none group cursor-pointer active:scale-95 transition-transform"
         >
             <div className="relative">
                 <div className="absolute -inset-0.5 bg-gradient-to-tr from-aurora-pink to-aurora-magenta rounded-xl blur opacity-30 group-hover:opacity-60 transition duration-500"></div>
