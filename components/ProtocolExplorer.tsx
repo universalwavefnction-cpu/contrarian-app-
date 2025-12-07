@@ -415,19 +415,23 @@ export const ProtocolExplorer: React.FC<ProtocolExplorerProps> = ({ onSelectProt
                 {/* Background ambient glow */}
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-aurora-peach/20 dark:bg-aurora-magenta/10 blur-[120px] rounded-full pointer-events-none mix-blend-screen"></div>
 
-                <div className="relative z-10 max-w-5xl mx-auto space-y-6">
-                    <h1 className="text-3xl md:text-5xl font-semibold tracking-tighter text-slate-900 dark:text-white leading-[1.1]">
+                <div className="relative z-10 max-w-5xl mx-auto space-y-8">
+                    <h1 className="text-4xl md:text-6xl font-semibold tracking-tighter text-slate-900 dark:text-white leading-[1.1]">
                         First Community of <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-aurora-peach via-aurora-pink to-aurora-magenta dark:from-aurora-peach dark:via-aurora-pink dark:to-aurora-magenta relative">
                             Authentic Achievers.
                             <span className="absolute -bottom-2 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-aurora-pink to-transparent opacity-50"></span>
                         </span>
-                        <br />
-                        <span className="text-2xl md:text-4xl text-slate-700 dark:text-slate-300 block mt-2">Pick a domain to start experimenting.</span>
                     </h1>
-                    <p className="text-slate-500 dark:text-slate-400 text-base md:text-lg max-w-2xl mx-auto leading-relaxed font-light tracking-wide uppercase">
-                        No gurus. No universal answers. <span className="text-slate-900 dark:text-white font-medium">Just honest data.</span>
-                    </p>
+
+                    <div className="space-y-3">
+                        <p className="text-slate-600 dark:text-slate-300 text-lg md:text-xl font-light">
+                            Pick a domain to start experimenting.
+                        </p>
+                        <p className="text-slate-500 dark:text-slate-500 text-xs md:text-sm uppercase tracking-widest font-medium">
+                            No gurus. No universal answers. <span className="text-slate-900 dark:text-white">Just honest data.</span>
+                        </p>
+                    </div>
                 </div>
             </div>
 
