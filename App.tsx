@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Layout, Compass, Activity, Users, PlusCircle, Menu, X, Sparkles, BrainCircuit, Search, TrendingUp, BookOpen, Library, Sun, Moon, Command } from 'lucide-react';
-import { Protocol, Experiment } from './types';
-import { CURRENT_USER, SAMPLE_PROTOCOLS, USER_EXPERIMENTS } from './constants';
+import { Protocol, Experiment, Resource } from './types';
+import { CURRENT_USER, SAMPLE_PROTOCOLS, USER_EXPERIMENTS, SAMPLE_RESOURCES } from './constants';
 import { ProtocolExplorer } from './components/ProtocolExplorer';
 import { UserDashboard } from './components/UserDashboard';
 import { CommunityHub } from './components/CommunityHub';
@@ -23,6 +23,7 @@ function AppContent() {
     const [user, setUser] = useState(CURRENT_USER);
     const [myExperiments, setMyExperiments] = useState<Experiment[]>(USER_EXPERIMENTS);
     const [protocols, setProtocols] = useState<Protocol[]>(SAMPLE_PROTOCOLS);
+    const [resources, setResources] = useState<Resource[]>(SAMPLE_RESOURCES);
     const { theme, toggleTheme } = useTheme();
     const [exploreKey, setExploreKey] = useState(0);
 
@@ -45,6 +46,18 @@ function AppContent() {
 
     const handleDeleteProtocol = (id: string) => {
         setProtocols(protocols.filter(p => p.id !== id));
+    };
+
+    const handleUpdateResource = (updatedResource: Resource) => {
+        setResources(resources.map(r => r.id === updatedResource.id ? updatedResource : r));
+    };
+
+    const handleAddResource = (newResource: Resource) => {
+        setResources([newResource, ...resources]);
+    };
+
+    const handleDeleteResource = (id: string) => {
+        setResources(resources.filter(r => r.id !== id));
     };
 
     // Handle Custom Navigation Events (from Command Palette)
@@ -239,13 +252,17 @@ function AppContent() {
                         {currentView === 'blog' && (
                             <BlogPage onBack={() => setCurrentView('explore')} />
                         )}
-                        {currentView === 'resources' && <ResourcesPage />}
+                        {currentView === 'resources' && <ResourcesPage resources={resources} />}
                         {currentView === 'admin' && (
                             <AdminDashboard
                                 protocols={protocols}
+                                resources={resources}
                                 onUpdateProtocol={handleUpdateProtocol}
                                 onAddProtocol={handleAddProtocol}
                                 onDeleteProtocol={handleDeleteProtocol}
+                                onUpdateResource={handleUpdateResource}
+                                onAddResource={handleAddResource}
+                                onDeleteResource={handleDeleteResource}
                                 onBack={() => setCurrentView('explore')}
                             />
                         )}

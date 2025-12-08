@@ -1,4 +1,4 @@
-import { Category, Difficulty, Protocol, Experiment, User, CommunityPost, BlogPost } from './types';
+import { Category, Difficulty, Protocol, Experiment, User, CommunityPost, BlogPost, Resource } from './types';
 
 export const CURRENT_USER: User = {
   id: 'u1',
@@ -222,5 +222,140 @@ export const USER_EXPERIMENTS: Experiment[] = [
       { date: '1', score: 40 }, { date: '2', score: 50 }, { date: '3', score: 45 },
       { date: '4', score: 60 }, { date: '5', score: 75 }
     ]
+  }
+];
+
+export const SAMPLE_RESOURCES: Resource[] = [
+  {
+    id: 'r1',
+    title: 'Why We Sleep',
+    description: 'The definitive guide to the science of sleep. Unlocks the power of sleep and dreams to transform your life.',
+    type: 'book',
+    category: Category.Biohacking,
+    author: 'Matthew Walker',
+    url: '#',
+    rating: 4.8,
+    featured: true
+  },
+  {
+    id: 'r2',
+    title: 'Huberman Lab Podcast',
+    description: 'In-depth science discussions on mastering brain and body protocols for peak performance.',
+    type: 'podcast',
+    category: Category.Science,
+    author: 'Andrew Huberman',
+    url: '#',
+    rating: 4.9,
+    featured: true
+  },
+  {
+    id: 'r3',
+    title: 'Deep Work',
+    description: 'Rules for focused success in a distracted world. Master the art of concentrated work.',
+    type: 'book',
+    category: Category.Productivity,
+    author: 'Cal Newport',
+    url: '#',
+    rating: 4.7,
+    featured: true
+  },
+  {
+    id: 'r4',
+    title: 'The Tim Ferriss Show',
+    description: 'Deconstructing world-class performers to extract the tactics and tools you can use.',
+    type: 'podcast',
+    category: Category.Business,
+    author: 'Tim Ferriss',
+    url: '#',
+    rating: 4.6,
+    featured: false
+  },
+  {
+    id: 'r5',
+    title: 'Atomic Habits',
+    description: 'Tiny changes, remarkable results. An easy & proven way to build good habits & break bad ones.',
+    type: 'book',
+    category: Category.Productivity,
+    author: 'James Clear',
+    url: '#',
+    rating: 4.9,
+    featured: true
+  },
+  {
+    id: 'r6',
+    title: 'Lifespan: Why We Age',
+    description: 'A paradigm-shifting book on aging and the science of living longer, healthier lives.',
+    type: 'book',
+    category: Category.Science,
+    author: 'David Sinclair',
+    url: '#',
+    rating: 4.5,
+    featured: false
+  },
+  {
+    id: 'r7',
+    title: 'Coursera: Learning How to Learn',
+    description: 'Free online course teaching you powerful mental tools to help you master tough subjects.',
+    type: 'video',
+    category: Category.Productivity,
+    author: 'Dr. Barbara Oakley',
+    url: '#',
+    rating: 4.8,
+    featured: true
+  },
+  {
+    id: 'r8',
+    title: 'Examine.com',
+    description: 'The largest independent database of supplement and nutrition research. Evidence-based insights.',
+    type: 'tool',
+    category: Category.Nutrition,
+    author: 'Examine Team',
+    url: '#',
+    rating: 4.7,
+    featured: false
+  },
+  {
+    id: 'r9',
+    title: 'The Stoic Challenge',
+    description: 'A philosopher\'s guide to becoming tougher, calmer, and more resilient in the face of adversity.',
+    type: 'book',
+    category: Category.Philosophy,
+    author: 'William Irvine',
+    url: '#',
+    rating: 4.4,
+    featured: false
+  },
+  {
+    id: 'r10',
+    title: 'Rhonda Patrick PhD Videos',
+    description: 'Deep dives into the science of aging, nutrition, and health optimization.',
+    type: 'video',
+    category: Category.Biohacking,
+    author: 'Dr. Rhonda Patrick',
+    url: '#',
+    rating: 4.6,
+    featured: false
+  },
+  {
+    id: 'r11',
+    title: 'The Mom Test',
+    description: 'How to talk to customers & learn if your business is a good idea when everyone is lying to you.',
+    type: 'book',
+    category: Category.Business,
+    author: 'Rob Fitzpatrick',
+    url: '#',
+    rating: 4.7,
+    featured: false
+  },
+  {
+    id: 'r12',
+    title: 'Cronometer',
+    description: 'The most accurate nutrition tracking app. Track your micronutrients, macros, and biometrics.',
+    type: 'tool',
+    category: Category.Nutrition,
+    author: 'Cronometer Team',
+    url: '#',
+    rating: 4.5,
+    featured: true
   }
 ];

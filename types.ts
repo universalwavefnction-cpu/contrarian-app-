@@ -82,3 +82,15 @@ export interface BlogPost {
   imageUrl: string;
   tags: string[];
 }
+
+export interface Resource {
+  id: string;
+  title: string;
+  description: string;
+  type: 'book' | 'video' | 'podcast' | 'article' | 'tool';
+  category: Category;
+  author: string;
+  url: string;
+  rating: number;
+  featured: boolean;
+}

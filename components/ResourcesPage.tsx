@@ -1,153 +1,6 @@
 import React, { useState } from 'react';
 import { ExternalLink, BookOpen, Video, Headphones, FileText, Star, Download, Filter, Search, ChevronRight } from 'lucide-react';
-import { Category } from '../types';
-
-interface Resource {
-    id: string;
-    title: string;
-    description: string;
-    type: 'book' | 'video' | 'podcast' | 'article' | 'tool';
-    category: Category;
-    author: string;
-    url: string;
-    rating: number;
-    featured: boolean;
-}
-
-const SAMPLE_RESOURCES: Resource[] = [
-    {
-        id: 'r1',
-        title: 'Why We Sleep',
-        description: 'The definitive guide to the science of sleep. Unlocks the power of sleep and dreams to transform your life.',
-        type: 'book',
-        category: Category.Biohacking,
-        author: 'Matthew Walker',
-        url: '#',
-        rating: 4.8,
-        featured: true
-    },
-    {
-        id: 'r2',
-        title: 'Huberman Lab Podcast',
-        description: 'In-depth science discussions on mastering brain and body protocols for peak performance.',
-        type: 'podcast',
-        category: Category.Science,
-        author: 'Andrew Huberman',
-        url: '#',
-        rating: 4.9,
-        featured: true
-    },
-    {
-        id: 'r3',
-        title: 'Deep Work',
-        description: 'Rules for focused success in a distracted world. Master the art of concentrated work.',
-        type: 'book',
-        category: Category.Productivity,
-        author: 'Cal Newport',
-        url: '#',
-        rating: 4.7,
-        featured: true
-    },
-    {
-        id: 'r4',
-        title: 'The Tim Ferriss Show',
-        description: 'Deconstructing world-class performers to extract the tactics and tools you can use.',
-        type: 'podcast',
-        category: Category.Business,
-        author: 'Tim Ferriss',
-        url: '#',
-        rating: 4.6,
-        featured: false
-    },
-    {
-        id: 'r5',
-        title: 'Atomic Habits',
-        description: 'Tiny changes, remarkable results. An easy & proven way to build good habits & break bad ones.',
-        type: 'book',
-        category: Category.Productivity,
-        author: 'James Clear',
-        url: '#',
-        rating: 4.9,
-        featured: true
-    },
-    {
-        id: 'r6',
-        title: 'Lifespan: Why We Age',
-        description: 'A paradigm-shifting book on aging and the science of living longer, healthier lives.',
-        type: 'book',
-        category: Category.Science,
-        author: 'David Sinclair',
-        url: '#',
-        rating: 4.5,
-        featured: false
-    },
-    {
-        id: 'r7',
-        title: 'Coursera: Learning How to Learn',
-        description: 'Free online course teaching you powerful mental tools to help you master tough subjects.',
-        type: 'video',
-        category: Category.Productivity,
-        author: 'Dr. Barbara Oakley',
-        url: '#',
-        rating: 4.8,
-        featured: true
-    },
-    {
-        id: 'r8',
-        title: 'Examine.com',
-        description: 'The largest independent database of supplement and nutrition research. Evidence-based insights.',
-        type: 'tool',
-        category: Category.Nutrition,
-        author: 'Examine Team',
-        url: '#',
-        rating: 4.7,
-        featured: false
-    },
-    {
-        id: 'r9',
-        title: 'The Stoic Challenge',
-        description: 'A philosopher\'s guide to becoming tougher, calmer, and more resilient in the face of adversity.',
-        type: 'book',
-        category: Category.Philosophy,
-        author: 'William Irvine',
-        url: '#',
-        rating: 4.4,
-        featured: false
-    },
-    {
-        id: 'r10',
-        title: 'Rhonda Patrick PhD Videos',
-        description: 'Deep dives into the science of aging, nutrition, and health optimization.',
-        type: 'video',
-        category: Category.Biohacking,
-        author: 'Dr. Rhonda Patrick',
-        url: '#',
-        rating: 4.6,
-        featured: false
-    },
-    {
-        id: 'r11',
-        title: 'The Mom Test',
-        description: 'How to talk to customers & learn if your business is a good idea when everyone is lying to you.',
-        type: 'book',
-        category: Category.Business,
-        author: 'Rob Fitzpatrick',
-        url: '#',
-        rating: 4.7,
-        featured: false
-    },
-    {
-        id: 'r12',
-        title: 'Cronometer',
-        description: 'The most accurate nutrition tracking app. Track your micronutrients, macros, and biometrics.',
-        type: 'tool',
-        category: Category.Nutrition,
-        author: 'Cronometer Team',
-        url: '#',
-        rating: 4.5,
-        featured: true
-    }
-];
+import { Category, Resource } from '../types';
 
 const typeIcons: Record<Resource['type'], React.ReactNode> = {
     book: <BookOpen className="w-4 h-4" />,
@@ -165,12 +18,16 @@ const typeColors: Record<Resource['type'], string> = {
     tool: 'from-emerald-500/20 to-teal-500/20 border-emerald-500/30 text-emerald-400'
 };
 
-export const ResourcesPage: React.FC = () => {
+interface ResourcesPageProps {
+    resources: Resource[];
+}
+
+export const ResourcesPage: React.FC<ResourcesPageProps> = ({ resources }) => {
     const [selectedType, setSelectedType] = useState<Resource['type'] | 'all'>('all');
     const [selectedCategory, setSelectedCategory] = useState<Category | 'all'>('all');
     const [searchQuery, setSearchQuery] = useState('');
 
-    const filteredResources = SAMPLE_RESOURCES.filter(resource => {
+    const filteredResources = resources.filter(resource => {
         const matchesType = selectedType === 'all' || resource.type === selectedType;
         const matchesCategory = selectedCategory === 'all' || resource.category === selectedCategory;
         const matchesSearch = resource.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -179,7 +36,7 @@ export const ResourcesPage: React.FC = () => {
         return matchesType && matchesCategory && matchesSearch;
     });
 
-    const featuredResources = SAMPLE_RESOURCES.filter(r => r.featured).slice(0, 3);
+    const featuredResources = resources.filter(r => r.featured).slice(0, 3);
 
     return (
         <div className="p-6 md:p-12 max-w-7xl mx-auto">
